@@ -7,9 +7,9 @@ CORS(app)
 
 @app.route('/api/download', methods=['GET'])
 def download_video():
-video_url = request.args.get('url')
-if not video_url:
-return jsonify({"error": "URL is required"}), 400
+    video_url = request.args.get('url')
+    if not video_url:
+    return jsonify({"error": "URL is required"}), 400
 
 try:
 ydl_opts = {
