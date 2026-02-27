@@ -1,40 +1,33 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import yt_dlp
 
-app = Flask(__name__)
-CORS(app)
+app = FastAPI()
 
-@app.route('/api/download', methods=['GET'])
-def download_video():
-    video_url = request.args.get('url')
-    
-    if not video_url:
-        return jsonify({"error": "URL is required"}), 400
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+@app.get("/")
+async def home():
+    return {"message": "Backend is Ready!"}
+
+@app.get("/api/download")
+async def download_video(url: str):
+    if not url:
+        raise HTTPException(status_code=400, detail="URL is required")
     try:
-        ydl_opts = {
-            'format': 'best',
-            'quiet': True,
-            'no_warnings': True,
-        }
-
+        ydl_opts = {'format': 'best', 'quiet': True, 'no_warnings': True}
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(video_url, download=False)
-            download_url = info.get('url')
-
-        return jsonify({
-            "status": "success",
-            "title": info.get('title'),
-            "download_url": download_url
-        })
-
+            info = ydl.extract_info(url, download=False)
+            return {
+                "status": "success",
+                "title": info.get('title'),
+                "thumbnail": info.get('thumbnail'),
+                "download_url": info.get('url')
+            }
     except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+        raise HTTPException(status_code=400, detail=str(e))
