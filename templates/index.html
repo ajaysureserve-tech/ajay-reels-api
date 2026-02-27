@@ -1,58 +1,53 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajay Hub - Music & Downloader</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --yt-red: #ff0000; --bg-black: #0f0f0f; }
-        body { background-color: var(--bg-black); color: white; margin: 0; font-family: sans-serif; }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #0f0f0f; sticky: top; }
-        .search-box { display: flex; width: 50%; }
-        .search-box input { width: 100%; padding: 10px; border-radius: 20px 0 0 20px; border: 1px solid #333; background: #121212; color: white; outline: none; }
-        .search-box button { padding: 0 20px; border-radius: 0 20px 20px 0; border: none; background: #333; color: white; cursor: pointer; }
-        .downloader { padding: 30px; text-align: center; background: #1a1a1a; margin: 20px; border-radius: 15px; }
-        .input-group { max-width: 500px; margin: 20px auto; display: flex; gap: 10px; }
-        .input-group input { flex: 1; padding: 12px; border-radius: 5px; border: none; }
-        .input-group button { padding: 12px; background: var(--yt-red); color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
-        .card { background: #1e1e1e; border-radius: 10px; overflow: hidden; }
-        .thumb { height: 150px; background: #333; display: flex; align-items: center; justify-content: center; }
-    </style>
-</head>
-<body>
-    <nav>
-        <div style="color:red; font-weight:bold; font-size:24px;">Ajay<span style="color:white;">Hub</span></div>
-        <div class="search-box">
-            <input type="text" id="ytQuery" placeholder="Search Music or Video...">
-            <button onclick="searchYT()"><i class="fa fa-search"></i></button>
-        </div>
-        <div></div>
-    </nav>
+<script>
+    // 1. Apni YouTube API Key yahan dalein (Google Cloud Console se milti hai)
+    const API_KEY = 'YOUR_YOUTUBE_API_KEY_HERE'; 
 
-    <div class="downloader">
-        <h2>Download Reels & YouTube Videos</h2>
-        <div class="input-group">
-            <input type="text" id="videoLink" placeholder="Paste link here...">
-            <button onclick="startDownload()">Download</button>
-        </div>
-    </div>
+    async function searchVideos() {
+        let q = document.getElementById('ytQuery').value;
+        if(!q) return alert("Bhai, kuch toh likho search karne ke liye!");
 
-    <div class="video-grid" id="grid">
-        <div class="card"><div class="thumb"><i class="fa fa-play fa-2x"></i></div><div style="padding:10px;">Trending Song 1</div></div>
-        <div class="card"><div class="thumb"><i class="fa fa-play fa-2x"></i></div><div style="padding:10px;">New Reel Video</div></div>
-    </div>
+        // YouTube API se data fetch karna
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&q=${q}&type=video&key=${API_KEY}`;
 
-    <script>
-        function searchYT() {
-            let q = document.getElementById('ytQuery').value;
-            if(q) window.open("https://www.youtube.com/results?search_query=" + q, "_blank");
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            displayResults(data.items);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            alert("Search limit khatam ho gayi ya API key galat hai!");
         }
-        function startDownload() {
-            let link = document.getElementById('videoLink').value;
-            if(link) alert("Processing: " + link);
-        }
-    </script>
-</body>
-</html>
+    }
+
+    function displayResults(videos) {
+        let html = '';
+        videos.forEach(v => {
+            const videoId = v.id.videoId;
+            const title = v.snippet.title;
+            const thumb = v.snippet.thumbnails.medium.url;
+            const channel = v.snippet.channelTitle;
+
+            html += `
+                <div class="video-card" onclick="playVideo('${videoId}')">
+                    <div class="thumbnail">
+                        <img src="${thumb}" style="width:100%; height:100%; object-fit:cover;">
+                        <i class="fa fa-play-circle play-btn"></i>
+                    </div>
+                    <div class="v-info">
+                        <strong style="display:block; height:40px; overflow:hidden;">${title}</strong>
+                        <p style="font-size:12px; color:#aaa; margin-top:5px;">${channel}</p>
+                    </div>
+                </div>
+            `;
+        });
+        document.getElementById('videoResults').innerHTML = html;
+    }
+
+    function playVideo(id) {
+        const container = document.getElementById('player-container');
+        const player = document.getElementById('mainPlayer');
+        player.src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
+        container.style.display = "block";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
