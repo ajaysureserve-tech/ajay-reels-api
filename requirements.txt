@@ -1,9 +1,8 @@
-flask
-flask-cors
-yt-dlp
-gunicorn
 fastapi
 uvicorn
+yt-dlp
 requests
+flask-cors
+
 
 
