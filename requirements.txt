@@ -4,4 +4,6 @@ yt-dlp
 gunicorn
 fastapi
 uvicorn
+requests
+
 
