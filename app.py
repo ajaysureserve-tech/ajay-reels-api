@@ -6,19 +6,21 @@ import os
 
 app = FastAPI()
 
-# CORS allow karna zaroori hai taaki Vercel se Render par request aaye
+# 1. Sabse pehle CORS handle karte hain
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], # Sabhi websites se connection allow karega
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 @app.get("/")
 async def root():
-    return {"message": "Backend is Ready!"}
+    # Jab aap link open karoge toh ye dikhega
+    return {"message": "Backend is Ready!", "status": "Success"}
 
-# --- Naya Stream Route (Background Play ke liye) ---
+# --- Stream Route (Reels/Audio ke liye) ---
 @app.get("/stream")
 async def stream_audio(url: str):
     try:
@@ -30,6 +32,7 @@ async def stream_audio(url: str):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
             audio_url = info['url']
+        # Ye seedha audio link par bhej dega
         return RedirectResponse(url=audio_url)
     except Exception as e:
         return {"error": str(e)}
@@ -38,13 +41,17 @@ async def stream_audio(url: str):
 @app.get("/download")
 async def download_video(url: str):
     try:
+        # Vercel par file save karne ke liye /tmp folder use karna padta hai
+        output_path = "/tmp/video.mp4" 
+        
         ydl_opts = {
             'format': 'best',
-            'outtmpl': 'video.mp4',
+            'outtmpl': output_path,
             'noplaylist': True
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
-        return FileResponse("video.mp4", media_type="video/mp4", filename="downloaded_video.mp4")
+        
+        return FileResponse(output_path, media_type="video/mp4", filename="downloaded_video.mp4")
     except Exception as e:
         return {"error": str(e)}
