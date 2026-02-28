@@ -1,14 +1,8 @@
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    # Ye line aapke naye index.html ko load karegi
-    return render_template('index.html')
-
-# Baki ka aapka purana download wala code yahan rehne dein
-if __name__ == "__main__":
-    app.run(debug=True)
-    
-
+@app.get("/stream")
+async def stream_audio(url: str):
+    # yt-dlp ka use karke sirf audio link nikaal kar redirect karein
+    ydl_opts = {'format': 'bestaudio/best', 'noplaylist': True}
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, download=False)
+        audio_url = info['url']
+    return RedirectResponse(url=audio_url)
