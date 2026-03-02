@@ -1,0 +1,41 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+
+body {
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    height: 100vh;
+}
+
+.overlay { background: rgba(0,0,0,0.3); position: fixed; inset: 0; z-index: -1; }
+
+.quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 15px; }
+
+.icon-item { text-align: center; cursor: pointer; }
+
+.icon-circle { 
+    width: 55px; height: 55px; background: white; border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; 
+    margin: 0 auto 8px; font-size: 22px; color: #333;
+}
+
+.bottom-container {
+    position: fixed; bottom: 0; width: 100%; background: #fff;
+    padding: 10px 15px 20px; border-radius: 20px 20px 0 0; color: #333;
+}
+
+.search-box { 
+    background: #f1f3f4; display: flex; align-items: center; 
+    padding: 12px; border-radius: 30px; margin: 10px 0; 
+}
+
+.search-box input { border: none; background: none; outline: none; flex: 1; padding: 0 10px; font-size: 16px; }
+
+.nav-bar { display: flex; justify-content: space-around; font-size: 20px; color: #555; padding-top: 10px; }
+
+.tab-count { border: 2px solid #555; padding: 0 6px; border-radius: 5px; font-size: 14px; font-weight: bold; }
+
+.apps-overlay { 
+    position: fixed; inset: 0; background: white; z-index: 1000; 
+    display: none; overflow-y: auto; color: #333; padding: 20px; 
+}
