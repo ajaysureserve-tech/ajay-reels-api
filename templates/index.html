@@ -1,71 +1,136 @@
-<div class="quick-links" id="homeContent">
-    <div class="icon-item" onclick="openAllApps()">
-        <div class="icon-circle" style="background: #00bcd4;"><i class="fa fa-chevron-right"></i></div>
-        <span>View all</span>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JioSphere Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS: JioSphere Look */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body {
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
+            background-size: cover; height: 100vh; color: white; overflow: hidden;
+        }
+        .overlay { background: rgba(0,0,0,0.3); position: fixed; inset: 0; z-index: -1; }
 
-<div id="appsModal" class="apps-overlay">
-    <div class="modal-header">
-        <h3>All Categories</h3>
-        <span class="close-btn" onclick="closeAllApps()">&times;</span>
-    </div>
-    <div class="categories-container">
-        <div class="app-category">
-            <h4>Social Media</h4>
-            <div class="app-grid">
-                <div class="mini-app"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
-                <div class="mini-app"><i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span></div>
-            </div>
-        </div>
-        <div class="app-category">
-            <h4>Business & Finance</h4>
-            <div class="app-grid">
-                <div class="mini-app"><i class="fa fa-briefcase"></i><span>LinkedIn</span></div>
-                <div class="mini-app"><i class="fa fa-wallet"></i><span>Paytm</span></div>
-            </div>
-        </div>
-        <div class="app-category">
-            <h4>Dating & Lifestyle</h4>
-            <div class="app-grid">
-                <div class="mini-app"><i class="fa fa-heart" style="color:red"></i><span>Tinder</span></div>
-                <div class="mini-app"><i class="fa fa-stethoscope"></i><span>Health</span></div>
-            </div>
-        </div>
-        <div class="app-category">
-            <h4>Shopping & Media</h4>
-            <div class="app-grid">
-                <div class="mini-app"><i class="fa fa-shopping-bag"></i><span>Myntra</span></div>
-                <div class="mini-app"><i class="fa fa-music"></i><span>Spotify</span></div>
-            </div>
-        </div>
-    </div>
-</div>
+        /* Icon Grid */
+        .quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 15px; }
+        .icon-item { text-align: center; cursor: pointer; }
+        .icon-circle { 
+            width: 55px; height: 55px; background: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            margin: 0 auto 8px; font-size: 22px; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .icon-item span { font-size: 11px; font-weight: 500; text-shadow: 1px 1px 2px black; }
 
-<style>
-/* 3. CSS for Categories Modal */
-.apps-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: white; z-index: 1000; display: none; overflow-y: auto; color: #333;
-}
-.modal-header {
-    padding: 20px; display: flex; justify-content: space-between;
-    align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; background: white;
-}
-.app-category { padding: 15px; border-bottom: 8px solid #f5f5f5; }
-.app-category h4 { font-size: 14px; color: #888; margin-bottom: 15px; text-transform: uppercase; }
-.app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-.mini-app { text-align: center; font-size: 12px; }
-.mini-app i { font-size: 28px; display: block; margin-bottom: 5px; }
-.close-btn { font-size: 30px; cursor: pointer; }
-</style>
+        /* Bottom UI */
+        .bottom-container {
+            position: fixed; bottom: 0; width: 100%; background: #fff;
+            padding: 10px 15px 15px; border-radius: 24px 24px 0 0; color: #333;
+        }
+        .top-stories-btn { text-align: center; font-size: 13px; color: #777; margin-bottom: 8px; cursor: pointer; }
+        .search-box { 
+            background: #f1f3f4; display: flex; align-items: center; 
+            padding: 10px 15px; border-radius: 30px; margin-bottom: 15px; 
+        }
+        .search-box input { border: none; background: none; outline: none; flex: 1; padding: 0 10px; font-size: 16px; }
+        .nav-bar { display: flex; justify-content: space-around; font-size: 20px; color: #444; }
 
-<script>
-/* 4. JavaScript Functions */
-function openAllApps() {
-    document.getElementById('appsModal').style.display = 'block';
-}
-function closeAllApps() {
-    document.getElementById('appsModal').style.display = 'none';
-}
-</script>
+        /* Categories Overlay */
+        #appsModal { 
+            position: fixed; inset: 0; background: white; z-index: 1000; 
+            display: none; overflow-y: auto; color: #333; padding: 20px; 
+        }
+        .cat-title { font-size: 14px; color: #888; margin: 20px 0 10px; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div id="homeContent" class="quick-links">
+        <div class="icon-item"><div class="icon-circle" style="background:#00c853;"><i class="fa fa-plus"></i></div><span>Add new</span></div>
+        <div class="icon-item" onclick="handleIconClick('Youtube')"><div class="icon-circle"><i class="fab fa-youtube" style="color:red"></i></div><span>Youtube</span></div>
+        <div class="icon-item" onclick="handleIconClick('Mx Player')"><div class="icon-circle"><i class="fa fa-play" style="color:#2196f3"></i></div><span>Mx Player</span></div>
+        <div class="icon-item" onclick="handleIconClick('YT Music')"><div class="icon-circle"><i class="fab fa-youtube" style="color:red"></i></div><span>YT Music</span></div>
+        <div class="icon-item" onclick="handleIconClick('Flipkart')"><div class="icon-circle" style="background:#2874f0"><i class="fa fa-shopping-cart" style="color:white"></i></div><span>Flipkart</span></div>
+        <div class="icon-item" onclick="handleIconClick('Amazon')"><div class="icon-circle" style="background:#fff"><i class="fab fa-amazon" style="color:#ff9900"></i></div><span>Amazon</span></div>
+        <div class="icon-item" onclick="handleIconClick('Ajio')"><div class="icon-circle" style="background:#31353c"><i class="fa fa-shopping-bag" style="color:white"></i></div><span>Ajio</span></div>
+        <div class="icon-item" onclick="openAllApps()"><div class="icon-circle" style="background:#00bcd4;"><i class="fa fa-chevron-right" style="color:white"></i></div><span>View all</span></div>
+    </div>
+
+    <div id="videoResults" style="padding: 10px; overflow-y: auto; height: 60vh; display: none;"></div>
+
+    <div class="bottom-container">
+        <div class="top-stories-btn">Top stories <i class="fa fa-chevron-up"></i></div>
+        <div class="search-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_Hi_res_icon.png" width="18">
+            <input type="text" id="ytQuery" placeholder="Search or type link" onkeypress="if(event.key==='Enter') searchVideos()">
+            <i class="fa fa-microphone" style="margin-right: 15px; color: #4285F4;"></i>
+            <i class="fa fa-bell" style="color: #555;"></i>
+        </div>
+        <div class="nav-bar">
+            <i class="fa fa-chevron-left" onclick="location.reload()"></i>
+            <i class="fa fa-chevron-right"></i>
+            <i class="fa fa-search"></i>
+            <div style="border: 2px solid #444; padding: 0 6px; border-radius: 6px; font-size: 14px; font-weight: bold;">1</div>
+            <i class="fa fa-bars" onclick="openAllApps()"></i>
+        </div>
+    </div>
+
+    <div id="appsModal">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3>Categories</h3>
+            <span onclick="closeAllApps()" style="font-size:35px; cursor:pointer;">&times;</span>
+        </div>
+        <div id="categoryContainer"></div>
+    </div>
+
+    <script>
+        const API_KEY = 'AIzaSyBp9tuB1C-QYCSSGHgLu809PywUaXGGazk';
+
+        // Same categories as JioSphere
+        const appData = {
+            "Social Media": ["Facebook", "Instagram", "Twitter", "ShareChat"],
+            "Shopping": ["Flipkart", "Amazon", "Ajio", "Myntra"],
+            "Business": ["LinkedIn", "Paytm", "Google Pay"],
+            "Health": ["HealthifyMe", "Tata 1mg"]
+        };
+
+        function handleIconClick(q) { document.getElementById('ytQuery').value = q; searchVideos(); }
+
+        async function searchVideos() {
+            let q = document.getElementById('ytQuery').value;
+            document.getElementById('homeContent').style.display = 'none';
+            document.getElementById('videoResults').style.display = 'block';
+            document.getElementById('videoResults').innerHTML = '<p style="color:white; text-align:center;">Loading...</p>';
+
+            const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${q}&key=${API_KEY}`);
+            const data = await res.json();
+            
+            let html = '';
+            data.items.forEach(v => {
+                html += `<div style="background:#fff; margin-bottom:10px; border-radius:10px; overflow:hidden; color:#333;">
+                    <img src="${v.snippet.thumbnails.medium.url}" style="width:100%;">
+                    <div style="padding:10px;"><b>${v.snippet.title}</b></div>
+                </div>`;
+            });
+            document.getElementById('videoResults').innerHTML = html;
+        }
+
+        function openAllApps() {
+            let html = '';
+            for(let cat in appData) {
+                html += `<div class="cat-title">${cat}</div><div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">`;
+                appData[cat].forEach(app => {
+                    html += `<div style="text-align:center; font-size:11px;"><div class="icon-circle" style="width:45px; height:45px; background:#f0f0f0;"><i class="fa fa-globe"></i></div>${app}</div>`;
+                });
+                html += `</div>`;
+            }
+            document.getElementById('categoryContainer').innerHTML = html;
+            document.getElementById('appsModal').style.display = 'block';
+        }
+        function closeAllApps() { document.getElementById('appsModal').style.display = 'none'; }
+    </script>
+</body>
+</html>
