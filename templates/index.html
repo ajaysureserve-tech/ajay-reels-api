@@ -1,105 +1,71 @@
-<div class="search-box">
-    <input type="text" id="ytQuery" placeholder="Search YouTube Videos...">
-    <button onclick="searchVideos()"><i class="fa fa-search"></i></button>
+<div class="quick-links" id="homeContent">
+    <div class="icon-item" onclick="openAllApps()">
+        <div class="icon-circle" style="background: #00bcd4;"><i class="fa fa-chevron-right"></i></div>
+        <span>View all</span>
+    </div>
 </div>
 
-<div id="audio-container" style="display:none; text-align:center; margin: 20px; background: #222; padding: 15px; border-radius: 10px;">
-    <p id="audio-title" style="color: #fff; margin-bottom: 10px; font-weight: bold;"></p>
-    <audio id="bgAudio" controls style="width: 100%;"></audio>
-    <p style="color: #aaa; font-size: 12px; margin-top: 5px;">Ab aap screen off karke bhi sun sakte hain!</p>
+<div id="appsModal" class="apps-overlay">
+    <div class="modal-header">
+        <h3>All Categories</h3>
+        <span class="close-btn" onclick="closeAllApps()">&times;</span>
+    </div>
+    <div class="categories-container">
+        <div class="app-category">
+            <h4>Social Media</h4>
+            <div class="app-grid">
+                <div class="mini-app"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
+                <div class="mini-app"><i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span></div>
+            </div>
+        </div>
+        <div class="app-category">
+            <h4>Business & Finance</h4>
+            <div class="app-grid">
+                <div class="mini-app"><i class="fa fa-briefcase"></i><span>LinkedIn</span></div>
+                <div class="mini-app"><i class="fa fa-wallet"></i><span>Paytm</span></div>
+            </div>
+        </div>
+        <div class="app-category">
+            <h4>Dating & Lifestyle</h4>
+            <div class="app-grid">
+                <div class="mini-app"><i class="fa fa-heart" style="color:red"></i><span>Tinder</span></div>
+                <div class="mini-app"><i class="fa fa-stethoscope"></i><span>Health</span></div>
+            </div>
+        </div>
+        <div class="app-category">
+            <h4>Shopping & Media</h4>
+            <div class="app-grid">
+                <div class="mini-app"><i class="fa fa-shopping-bag"></i><span>Myntra</span></div>
+                <div class="mini-app"><i class="fa fa-music"></i><span>Spotify</span></div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="player-container" style="display:none; margin: 20px auto; max-width: 800px;">
-    <iframe id="mainPlayer" width="100%" height="450" src="" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<div id="videoResults" class="video-grid"></div>
+<style>
+/* 3. CSS for Categories Modal */
+.apps-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: white; z-index: 1000; display: none; overflow-y: auto; color: #333;
+}
+.modal-header {
+    padding: 20px; display: flex; justify-content: space-between;
+    align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; background: white;
+}
+.app-category { padding: 15px; border-bottom: 8px solid #f5f5f5; }
+.app-category h4 { font-size: 14px; color: #888; margin-bottom: 15px; text-transform: uppercase; }
+.app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+.mini-app { text-align: center; font-size: 12px; }
+.mini-app i { font-size: 28px; display: block; margin-bottom: 5px; }
+.close-btn { font-size: 30px; cursor: pointer; }
+</style>
 
 <script>
-    const API_KEY = 'AIzaSyBp9tuB1C-QYCSSGHgLu809PywUaXGGazk'; 
-
-    async function searchVideos() {
-        let q = document.getElementById('ytQuery').value;
-        if(!q) return alert("Bhai, kuch toh likho!");
-
-        document.getElementById('videoResults').innerHTML = '<p style="text-align:center; width:100%;">Searching...</p>';
-
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&q=${q}&type=video&key=${API_KEY}`;
-
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            
-            if(data.items && data.items.length > 0) {
-                displayResults(data.items);
-            } else {
-                document.getElementById('videoResults').innerHTML = '<p style="text-align:center; width:100%;">Koi video nahi mili!</p>';
-            }
-        } catch (error) {
-            alert("API Limit ya Technical Error!");
-        }
-    }
-
-    function displayResults(videos) {
-        let html = '';
-        videos.forEach(v => {
-            const videoId = v.id.videoId;
-            const title = v.snippet.title.replace(/'/g, ""); // Title clean up
-            html += `
-                <div class="video-card" style="background:#1e1e1e; border-radius:10px; overflow:hidden; margin:10px; padding-bottom: 10px;">
-                    <img src="${v.snippet.thumbnails.medium.url}" style="width:100%; cursor:pointer;" onclick="playVideo('${videoId}')">
-                    <div style="padding:10px;">
-                        <strong style="font-size:14px; display:block; height:40px; overflow:hidden;">${v.snippet.title}</strong>
-                        <p style="font-size:12px; color:#aaa; margin-top:5px;">${v.snippet.channelTitle}</p>
-                        
-                        <button onclick="playBackground('${videoId}', '${title}')" style="background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: bold;">
-                            Play Audio (Background)
-                        </button>
-
-                        <button onclick="startDownload('${videoId}')" style="background: #ff0000; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 5px; font-weight: bold;">
-                            Download Video (MP4)
-                        </button>
-                    </div>
-                </div>`;
-        });
-        document.getElementById('videoResults').innerHTML = html;
-    }
-
-    function playVideo(id) {
-        // Stop audio if playing
-        document.getElementById('bgAudio').pause();
-        document.getElementById('audio-container').style.display = "none";
-        
-        document.getElementById('player-container').style.display = "block";
-        document.getElementById('mainPlayer').src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Naya function jo background mein audio chalayega
-    function playBackground(videoId, title) {
-        // Stop video if playing
-        document.getElementById('mainPlayer').src = "";
-        document.getElementById('player-container').style.display = "none";
-
-        const audioContainer = document.getElementById('audio-container');
-        const audioPlayer = document.getElementById('bgAudio');
-        const audioTitle = document.getElementById('audio-title');
-        
-        // Aapka Render URL jahan se audio link aayega
-        const backendUrl = `https://ajay-api-backed.onrender.com/stream?url=https://www.youtube.com/watch?v=${videoId}`;
-        
-        audioTitle.innerText = "Playing: " + title;
-        audioContainer.style.display = "block";
-        audioPlayer.src = backendUrl;
-        audioPlayer.play();
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        alert("Audio load ho raha hai... Ab aap screen off kar sakte hain.");
-    }
-
-    function startDownload(videoId) {
-        const backendUrl = "https://ajay-api-backed.onrender.com/download"; 
-        alert("Download process shuru ho gaya hai...");
-        window.location.href = `${backendUrl}?url=https://www.youtube.com/watch?v=${videoId}`;
-    }
+/* 4. JavaScript Functions */
+function openAllApps() {
+    document.getElementById('appsModal').style.display = 'block';
+}
+function closeAllApps() {
+    document.getElementById('appsModal').style.display = 'none';
+}
 </script>
