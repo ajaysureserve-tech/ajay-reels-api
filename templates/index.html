@@ -1,136 +1,263 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JioSphere Clone</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Phone OS</title>
     <style>
-        /* CSS: JioSphere Look */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
         body {
-            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
-            background-size: cover; height: 100vh; color: white; overflow: hidden;
+            background: #0f172a;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
-        .overlay { background: rgba(0,0,0,0.3); position: fixed; inset: 0; z-index: -1; }
-
-        /* Icon Grid */
-        .quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 40px 15px; }
-        .icon-item { text-align: center; cursor: pointer; }
-        .icon-circle { 
-            width: 55px; height: 55px; background: white; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            margin: 0 auto 8px; font-size: 22px; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        /* Phone Frame Container */
+        .phone-frame {
+            width: 100%;
+            max-width: 414px;
+            height: 100%;
+            max-height: 896px;
+            background: #000;
+            border-radius: 0px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
-        .icon-item span { font-size: 11px; font-weight: 500; text-shadow: 1px 1px 2px black; }
-
-        /* Bottom UI */
-        .bottom-container {
-            position: fixed; bottom: 0; width: 100%; background: #fff;
-            padding: 10px 15px 15px; border-radius: 24px 24px 0 0; color: #333;
+        @media (min-width: 480px) {
+            .phone-frame {
+                height: 90vh;
+                border-radius: 40px;
+                border: 10px solid #2d3748;
+            }
         }
-        .top-stories-btn { text-align: center; font-size: 13px; color: #777; margin-bottom: 8px; cursor: pointer; }
-        .search-box { 
-            background: #f1f3f4; display: flex; align-items: center; 
-            padding: 10px 15px; border-radius: 30px; margin-bottom: 15px; 
+        /* Status Bar */
+        .status-bar {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 10;
         }
-        .search-box input { border: none; background: none; outline: none; flex: 1; padding: 0 10px; font-size: 16px; }
-        .nav-bar { display: flex; justify-content: space-around; font-size: 20px; color: #444; }
-
-        /* Categories Overlay */
-        #appsModal { 
-            position: fixed; inset: 0; background: white; z-index: 1000; 
-            display: none; overflow-y: auto; color: #333; padding: 20px; 
+        /* Home Screen Launcher */
+        .home-screen {
+            flex: 1;
+            background: linear-gradient(135deg, #4338ca, #6d28d9, #0284c7);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
         }
-        .cat-title { font-size: 14px; color: #888; margin: 20px 0 10px; text-transform: uppercase; }
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px 15px;
+        }
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .app-icon:active {
+            transform: scale(0.92);
+        }
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            color: #fff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            margin-bottom: 6px;
+        }
+        .app-name {
+            color: #fff;
+            font-size: 12px;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+        /* App View Window (Iframe container) */
+        .app-window {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+        }
+        .app-header {
+            height: 50px;
+            background: #1e293b;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: #38bdf8;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .app-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .app-content {
+            flex: 1;
+            width: 100%;
+            border: none;
+        }
+        /* Dock */
+        .dock {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
 
-    <div id="homeContent" class="quick-links">
-        <div class="icon-item"><div class="icon-circle" style="background:#00c853;"><i class="fa fa-plus"></i></div><span>Add new</span></div>
-        <div class="icon-item" onclick="handleIconClick('Youtube')"><div class="icon-circle"><i class="fab fa-youtube" style="color:red"></i></div><span>Youtube</span></div>
-        <div class="icon-item" onclick="handleIconClick('Mx Player')"><div class="icon-circle"><i class="fa fa-play" style="color:#2196f3"></i></div><span>Mx Player</span></div>
-        <div class="icon-item" onclick="handleIconClick('YT Music')"><div class="icon-circle"><i class="fab fa-youtube" style="color:red"></i></div><span>YT Music</span></div>
-        <div class="icon-item" onclick="handleIconClick('Flipkart')"><div class="icon-circle" style="background:#2874f0"><i class="fa fa-shopping-cart" style="color:white"></i></div><span>Flipkart</span></div>
-        <div class="icon-item" onclick="handleIconClick('Amazon')"><div class="icon-circle" style="background:#fff"><i class="fab fa-amazon" style="color:#ff9900"></i></div><span>Amazon</span></div>
-        <div class="icon-item" onclick="handleIconClick('Ajio')"><div class="icon-circle" style="background:#31353c"><i class="fa fa-shopping-bag" style="color:white"></i></div><span>Ajio</span></div>
-        <div class="icon-item" onclick="openAllApps()"><div class="icon-circle" style="background:#00bcd4;"><i class="fa fa-chevron-right" style="color:white"></i></div><span>View all</span></div>
-    </div>
-
-    <div id="videoResults" style="padding: 10px; overflow-y: auto; height: 60vh; display: none;"></div>
-
-    <div class="bottom-container">
-        <div class="top-stories-btn">Top stories <i class="fa fa-chevron-up"></i></div>
-        <div class="search-box">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_Hi_res_icon.png" width="18">
-            <input type="text" id="ytQuery" placeholder="Search or type link" onkeypress="if(event.key==='Enter') searchVideos()">
-            <i class="fa fa-microphone" style="margin-right: 15px; color: #4285F4;"></i>
-            <i class="fa fa-bell" style="color: #555;"></i>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="clock">15:35</span>
+            <span>5G 🔋</span>
         </div>
-        <div class="nav-bar">
-            <i class="fa fa-chevron-left" onclick="location.reload()"></i>
-            <i class="fa fa-chevron-right"></i>
-            <i class="fa fa-search"></i>
-            <div style="border: 2px solid #444; padding: 0 6px; border-radius: 6px; font-size: 14px; font-weight: bold;">1</div>
-            <i class="fa fa-bars" onclick="openAllApps()"></i>
-        </div>
-    </div>
 
-    <div id="appsModal">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3>Categories</h3>
-            <span onclick="closeAllApps()" style="font-size:35px; cursor:pointer;">&times;</span>
+        <!-- Home Screen -->
+        <div class="home-screen" id="homeScreen">
+            <div class="app-grid">
+                <!-- YouTube -->
+                <div class="app-icon" onclick="openApp('YouTube', 'https://m.youtube.com')">
+                    <div class="icon-box" style="background: #ff0000;">▶</div>
+                    <span class="app-name">YouTube</span>
+                </div>
+                <!-- Amazon -->
+                <div class="app-icon" onclick="openApp('Amazon', 'https://www.amazon.in')">
+                    <div class="icon-box" style="background: #ff9900;">🛒</div>
+                    <span class="app-name">Amazon</span>
+                </div>
+                <!-- Flipkart -->
+                <div class="app-icon" onclick="openApp('Flipkart', 'https://www.flipkart.com')">
+                    <div class="icon-box" style="background: #2874f0;">🛍️</div>
+                    <span class="app-name">Flipkart</span>
+                </div>
+                <!-- Instagram -->
+                <div class="app-icon" onclick="openApp('Instagram', 'https://www.instagram.com')">
+                    <div class="icon-box" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);">📸</div>
+                    <span class="app-name">Instagram</span>
+                </div>
+                <!-- Google -->
+                <div class="app-icon" onclick="openApp('Google', 'https://www.google.com')">
+                    <div class="icon-box" style="background: #ffffff; color: #4285F4;">G</div>
+                    <span class="app-name">Google</span>
+                </div>
+                <!-- Wikipedia -->
+                <div class="app-icon" onclick="openApp('Wikipedia', 'https://www.wikipedia.org')">
+                    <div class="icon-box" style="background: #f8f9fa; color: #000;">W</div>
+                    <span class="app-name">Wikipedia</span>
+                </div>
+                <!-- Calculator -->
+                <div class="app-icon" onclick="openApp('Calculator', 'https://www.online-calculator.com/full-screen-calculator.php')">
+                    <div class="icon-box" style="background: #334155;">🔢</div>
+                    <span class="app-name">Calculator</span>
+                </div>
+                <!-- Weather -->
+                <div class="app-icon" onclick="openApp('Weather', 'https://weather.com')">
+                    <div class="icon-box" style="background: #0ea5e9;">🌤️</div>
+                    <span class="app-name">Weather</span>
+                </div>
+            </div>
+
+            <!-- Dock at bottom -->
+            <div class="dock">
+                <div class="app-icon" onclick="openApp('Phone', 'https://www.google.com')">
+                    <div class="icon-box" style="background: #22c55e; width: 50px; height: 50px; font-size: 20px;">📞</div>
+                </div>
+                <div class="app-icon" onclick="openApp('Browser', 'https://www.google.com')">
+                    <div class="icon-box" style="background: #3b82f6; width: 50px; height: 50px; font-size: 20px;">🌐</div>
+                </div>
+                <div class="app-icon" onclick="openApp('Camera', 'https://www.google.com')">
+                    <div class="icon-box" style="background: #64748b; width: 50px; height: 50px; font-size: 20px;">📷</div>
+                </div>
+            </div>
         </div>
-        <div id="categoryContainer"></div>
+
+        <!-- Real App Window (Opens inside iframe) -->
+        <div class="app-window" id="appWindow">
+            <div class="app-header">
+                <button class="back-btn" onclick="closeApp()">‹ Back</button>
+                <span class="app-title" id="appWindowTitle">App</span>
+                <span style="width: 40px;"></span>
+            </div>
+            <iframe class="app-content" id="appIframe" src=""></iframe>
+        </div>
     </div>
 
     <script>
-        const API_KEY = 'AIzaSyBp9tuB1C-QYCSSGHgLu809PywUaXGGazk';
+        // Real-time clock update
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        // Same categories as JioSphere
-        const appData = {
-            "Social Media": ["Facebook", "Instagram", "Twitter", "ShareChat"],
-            "Shopping": ["Flipkart", "Amazon", "Ajio", "Myntra"],
-            "Business": ["LinkedIn", "Paytm", "Google Pay"],
-            "Health": ["HealthifyMe", "Tata 1mg"]
-        };
-
-        function handleIconClick(q) { document.getElementById('ytQuery').value = q; searchVideos(); }
-
-        async function searchVideos() {
-            let q = document.getElementById('ytQuery').value;
-            document.getElementById('homeContent').style.display = 'none';
-            document.getElementById('videoResults').style.display = 'block';
-            document.getElementById('videoResults').innerHTML = '<p style="color:white; text-align:center;">Loading...</p>';
-
-            const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${q}&key=${API_KEY}`);
-            const data = await res.json();
-            
-            let html = '';
-            data.items.forEach(v => {
-                html += `<div style="background:#fff; margin-bottom:10px; border-radius:10px; overflow:hidden; color:#333;">
-                    <img src="${v.snippet.thumbnails.medium.url}" style="width:100%;">
-                    <div style="padding:10px;"><b>${v.snippet.title}</b></div>
-                </div>`;
-            });
-            document.getElementById('videoResults').innerHTML = html;
+        // Open App function
+        function openApp(name, url) {
+            document.getElementById('appWindowTitle').innerText = name;
+            document.getElementById('appIframe').src = url;
+            document.getElementById('appWindow').style.display = 'flex';
         }
 
-        function openAllApps() {
-            let html = '';
-            for(let cat in appData) {
-                html += `<div class="cat-title">${cat}</div><div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">`;
-                appData[cat].forEach(app => {
-                    html += `<div style="text-align:center; font-size:11px;"><div class="icon-circle" style="width:45px; height:45px; background:#f0f0f0;"><i class="fa fa-globe"></i></div>${app}</div>`;
-                });
-                html += `</div>`;
-            }
-            document.getElementById('categoryContainer').innerHTML = html;
-            document.getElementById('appsModal').style.display = 'block';
+        // Close App function
+        function closeApp() {
+            document.getElementById('appWindow').style.display = 'none';
+            document.getElementById('appIframe').src = '';
         }
-        function closeAllApps() { document.getElementById('appsModal').style.display = 'none'; }
     </script>
 </body>
 </html>
+
