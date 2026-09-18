@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Phone OS</title>
+    <title>Virtual Mobile Clone</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,6 @@
             align-items: center;
             overflow: hidden;
         }
-        /* Phone Frame Container */
         .phone-frame {
             width: 100%;
             max-width: 414px;
@@ -40,7 +39,6 @@
                 border: 10px solid #2d3748;
             }
         }
-        /* Status Bar */
         .status-bar {
             height: 40px;
             background: rgba(0, 0, 0, 0.4);
@@ -53,7 +51,6 @@
             font-weight: 600;
             z-index: 10;
         }
-        /* Home Screen Launcher */
         .home-screen {
             flex: 1;
             background: linear-gradient(135deg, #4338ca, #6d28d9, #0284c7);
@@ -72,6 +69,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-decoration: none;
             cursor: pointer;
             transition: transform 0.1s;
         }
@@ -100,48 +98,6 @@
             text-overflow: ellipsis;
             width: 100%;
         }
-        /* App View Window (Iframe container) */
-        .app-window {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            z-index: 50;
-            display: none;
-            flex-direction: column;
-        }
-        .app-header {
-            height: 50px;
-            background: #1e293b;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 15px;
-        }
-        .back-btn {
-            background: none;
-            border: none;
-            color: #38bdf8;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .app-title {
-            font-size: 16px;
-            font-weight: 500;
-        }
-        .app-content {
-            flex: 1;
-            width: 100%;
-            border: none;
-        }
-        /* Dock */
         .dock {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
@@ -159,7 +115,7 @@
     <div class="phone-frame">
         <!-- Status Bar -->
         <div class="status-bar">
-            <span id="clock">15:35</span>
+            <span id="clock">15:50</span>
             <span>5G 🔋</span>
         </div>
 
@@ -167,74 +123,63 @@
         <div class="home-screen" id="homeScreen">
             <div class="app-grid">
                 <!-- YouTube -->
-                <div class="app-icon" onclick="openApp('YouTube', 'https://m.youtube.com')">
+                <a class="app-icon" href="https://m.youtube.com" target="_blank">
                     <div class="icon-box" style="background: #ff0000;">▶</div>
                     <span class="app-name">YouTube</span>
-                </div>
+                </a>
                 <!-- Amazon -->
-                <div class="app-icon" onclick="openApp('Amazon', 'https://www.amazon.in')">
+                <a class="app-icon" href="https://www.amazon.in" target="_blank">
                     <div class="icon-box" style="background: #ff9900;">🛒</div>
                     <span class="app-name">Amazon</span>
-                </div>
+                </a>
                 <!-- Flipkart -->
-                <div class="app-icon" onclick="openApp('Flipkart', 'https://www.flipkart.com')">
+                <a class="app-icon" href="https://www.flipkart.com" target="_blank">
                     <div class="icon-box" style="background: #2874f0;">🛍️</div>
                     <span class="app-name">Flipkart</span>
-                </div>
+                </a>
                 <!-- Instagram -->
-                <div class="app-icon" onclick="openApp('Instagram', 'https://www.instagram.com')">
+                <a class="app-icon" href="https://www.instagram.com" target="_blank">
                     <div class="icon-box" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);">📸</div>
                     <span class="app-name">Instagram</span>
-                </div>
+                </a>
                 <!-- Google -->
-                <div class="app-icon" onclick="openApp('Google', 'https://www.google.com')">
+                <a class="app-icon" href="https://www.google.com" target="_blank">
                     <div class="icon-box" style="background: #ffffff; color: #4285F4;">G</div>
                     <span class="app-name">Google</span>
-                </div>
+                </a>
                 <!-- Wikipedia -->
-                <div class="app-icon" onclick="openApp('Wikipedia', 'https://www.wikipedia.org')">
+                <a class="app-icon" href="https://www.wikipedia.org" target="_blank">
                     <div class="icon-box" style="background: #f8f9fa; color: #000;">W</div>
                     <span class="app-name">Wikipedia</span>
-                </div>
+                </a>
                 <!-- Calculator -->
-                <div class="app-icon" onclick="openApp('Calculator', 'https://www.online-calculator.com/full-screen-calculator.php')">
+                <a class="app-icon" href="https://www.online-calculator.com/full-screen-calculator.php" target="_blank">
                     <div class="icon-box" style="background: #334155;">🔢</div>
                     <span class="app-name">Calculator</span>
-                </div>
+                </a>
                 <!-- Weather -->
-                <div class="app-icon" onclick="openApp('Weather', 'https://weather.com')">
+                <a class="app-icon" href="https://weather.com" target="_blank">
                     <div class="icon-box" style="background: #0ea5e9;">🌤️</div>
                     <span class="app-name">Weather</span>
-                </div>
+                </a>
             </div>
 
             <!-- Dock at bottom -->
             <div class="dock">
-                <div class="app-icon" onclick="openApp('Phone', 'https://www.google.com')">
+                <a class="app-icon" href="https://www.google.com" target="_blank">
                     <div class="icon-box" style="background: #22c55e; width: 50px; height: 50px; font-size: 20px;">📞</div>
-                </div>
-                <div class="app-icon" onclick="openApp('Browser', 'https://www.google.com')">
+                </a>
+                <a class="app-icon" href="https://www.google.com" target="_blank">
                     <div class="icon-box" style="background: #3b82f6; width: 50px; height: 50px; font-size: 20px;">🌐</div>
-                </div>
-                <div class="app-icon" onclick="openApp('Camera', 'https://www.google.com')">
+                </a>
+                <a class="app-icon" href="https://www.google.com" target="_blank">
                     <div class="icon-box" style="background: #64748b; width: 50px; height: 50px; font-size: 20px;">📷</div>
-                </div>
+                </a>
             </div>
-        </div>
-
-        <!-- Real App Window (Opens inside iframe) -->
-        <div class="app-window" id="appWindow">
-            <div class="app-header">
-                <button class="back-btn" onclick="closeApp()">‹ Back</button>
-                <span class="app-title" id="appWindowTitle">App</span>
-                <span style="width: 40px;"></span>
-            </div>
-            <iframe class="app-content" id="appIframe" src=""></iframe>
         </div>
     </div>
 
     <script>
-        // Real-time clock update
         function updateClock() {
             const now = new Date();
             let hours = now.getHours();
@@ -244,19 +189,6 @@
         }
         setInterval(updateClock, 1000);
         updateClock();
-
-        // Open App function
-        function openApp(name, url) {
-            document.getElementById('appWindowTitle').innerText = name;
-            document.getElementById('appIframe').src = url;
-            document.getElementById('appWindow').style.display = 'flex';
-        }
-
-        // Close App function
-        function closeApp() {
-            document.getElementById('appWindow').style.display = 'none';
-            document.getElementById('appIframe').src = '';
-        }
     </script>
 </body>
 </html>
