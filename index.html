@@ -139,7 +139,7 @@
                 <i class="fa-solid fa-bars text-lg"></i>
             </button>
             <div class="flex items-center space-x-2 font-semibold text-slate-900 text-base cursor-pointer">
-                <span>Gemini 1.5 Flash</span>
+                <span>Gemini Flash Latest</span>
                 <i class="fa-solid fa-chevron-down text-xs text-slate-500"></i>
             </div>
         </div>
@@ -189,12 +189,8 @@
     </div>
 
     <script>
-        const k1 = "AQ.Ab8RN6KC";
-        const k2 = "aixskotsQY2";
-        const k3 = "5UjsJGKeOD_";
-        const k4 = "IYqGkuwK8BX";
-        const k5 = "futNDxe_Q";
-        const API_KEY = k1 + k2 + k3 + k4 + k5;
+        // API key will be fetched from Vercel Environment Variable or fallback to local key if testing locally
+        const API_KEY = window.ENV_API_KEY || "PASTE_YOUR_LOCAL_API_KEY_HERE";
 
         const chatContainer = document.getElementById('chat-container');
         const promptInput = document.getElementById('prompt-input');
@@ -402,8 +398,7 @@
         }
 
         async function callGeminiAPI(promptText, base64Img = null) {
-            // FIXED MODEL ENDPOINT TO AVOID HIGH DEMAND/QUOTA SPIKES
-            const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+            const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
             let parts = [{ text: promptText }];
             if (base64Img) {
                 const base64Data = base64Img.split(',')[1];
@@ -421,7 +416,7 @@
                 if (data.candidates && data.candidates.length > 0) {
                     return data.candidates[0].content.parts[0].text;
                 } else {
-                    return data.error?.message || "Model overloaded. Please try again.";
+                    return data.error?.message || "Model error. Please try again.";
                 }
             } catch (err) {
                 return `Network Error: ${err.message}`;
@@ -478,4 +473,3 @@
     </script>
 </body>
 </html>
-
