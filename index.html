@@ -3,158 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7 AI Skills for 2026 - Studio</title>
+    <title>Gemini Studio - 2026 AI Skills</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-color: #131314;
-            --panel-color: #1e1f20;
-            --text-color: #e3e3e3;
-            --accent-color: #8ab4f8;
-            --border-color: #333537;
+        .bg-gradient-pink-white {
+            background: linear-gradient(135deg, #fff5f7 0%, #fff1f4 50%, #ffffff 100%);
         }
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-        header {
-            padding: 15px 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-bottom: 1px solid var(--border-color);
-            background-color: var(--panel-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .skills-bar {
-            display: flex;
-            gap: 10px;
-            padding: 10px 20px;
-            background-color: #18191a;
-            overflow-x: auto;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .skill-chip {
-            background-color: var(--panel-color);
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            white-space: nowrap;
-            color: var(--accent-color);
-        }
-        .skill-chip:hover {
-            background-color: var(--accent-color);
-            color: #000;
-        }
-        #chat-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-        }
-        .message {
-            padding: 12px 18px;
-            border-radius: 12px;
-            max-width: 75%;
-            line-height: 1.5;
-            word-wrap: break-word;
-        }
-        .user-msg {
-            background-color: #2b2c2f;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-        .ai-msg {
-            background-color: var(--panel-color);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-            border: 1px solid var(--border-color);
-        }
-        .input-area {
-            padding: 20px;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-        }
-        .input-wrapper {
-            display: flex;
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--panel-color);
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 8px 15px;
-            align-items: center;
-            gap: 10px;
-        }
-        input[type="text"] {
-            flex: 1;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 1rem;
-            outline: none;
-            padding: 8px;
-        }
-        button {
-            background-color: var(--accent-color);
-            color: #000;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #fbcfe8; border-radius: 10px; }
     </style>
 </head>
-<body>
+<body class="bg-gradient-pink-white text-slate-800 font-sans h-screen flex flex-col justify-between overflow-hidden">
 
-    <header>
-        <span>7 AI Skills for 2026 Studio</span>
+    <!-- Top Navigation Header -->
+    <header class="flex items-center justify-between px-4 py-3 bg-white/70 backdrop-blur-md border-b border-pink-100 shrink-0">
+        <div class="flex items-center space-x-3">
+            <button class="p-2 rounded-full hover:bg-pink-50 text-slate-700 transition">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+            <div class="flex items-center space-x-2 font-semibold text-slate-900 text-base cursor-pointer">
+                <span>Gemini Flash-Lite</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-500"></i>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button class="p-2.5 rounded-full hover:bg-pink-50 text-slate-700 transition border border-pink-100">
+                <i class="fa-solid fa-wand-magic-sparkles text-pink-600"></i>
+            </button>
+            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 text-white font-bold flex items-center justify-center text-xs shadow-sm">
+                AS
+            </div>
+        </div>
     </header>
 
-    <div class="skills-bar">
-        <div class="skill-chip" onclick="selectSkill('Prompt Engineering')">⚡ Prompt Engineering</div>
-        <div class="skill-chip" onclick="selectSkill('AI Content Creation')">📝 Content Creation</div>
-        <div class="skill-chip" onclick="selectSkill('AI Video Creation')">🎬 Video Creation</div>
-        <div class="skill-chip" onclick="selectSkill('AI Marketing Automation')">📈 Marketing Automation</div>
-        <div class="skill-chip" onclick="selectSkill('AI Design & Creativity')">🎨 Design & Creativity</div>
-        <div class="skill-chip" onclick="selectSkill('AI Data & Decision Making')">📊 Data & Decision Making</div>
-        <div class="skill-chip" onclick="selectSkill('AI Personal Branding')">🚀 Personal Branding</div>
+    <!-- Skills Horizontal Bar -->
+    <div class="flex gap-2 px-4 py-2 bg-white/40 overflow-x-auto border-b border-pink-100 shrink-0">
+        <button onclick="selectSkill('Prompt Engineering')" class="bg-white hover:bg-pink-50 border border-pink-200 text-pink-600 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shadow-xs transition">⚡ Prompt Engineering</button>
+        <button onclick="selectSkill('AI Content Creation')" class="bg-white hover:bg-pink-50 border border-pink-200 text-pink-600 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shadow-xs transition">📝 Content Creation</button>
+        <button onclick="selectSkill('AI Video Creation')" class="bg-white hover:bg-pink-50 border border-pink-200 text-pink-600 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shadow-xs transition">🎬 Video Creation</button>
+        <button onclick="selectSkill('AI Marketing Automation')" class="bg-white hover:bg-pink-50 border border-pink-200 text-pink-600 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shadow-xs transition">📈 Marketing</button>
+        <button onclick="selectSkill('AI Design & Creativity')" class="bg-white hover:bg-pink-50 border border-pink-200 text-pink-600 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shadow-xs transition">🎨 Design</button>
     </div>
 
-    <div id="chat-container">
-        <div class="message ai-msg">Hello! 2026 ki 7 essential AI skills me se kisi bhi skill ke baare me poochhiye ya upar diye gaye chips par click kijiye!</div>
+    <!-- Chat/Content Container -->
+    <div id="chat-container" class="flex-1 overflow-y-auto p-4 space-y-4 max-w-2xl w-full mx-auto my-auto">
+        <div class="p-4 bg-white/80 border border-pink-100 rounded-2xl shadow-sm text-sm text-slate-700">
+            Hello! 2026 ki essential AI skills ke baare me poochhiye ya upar diye gaye chips par click kijiye.
+        </div>
     </div>
 
-    <div class="input-area">
-        <div class="input-wrapper">
-            <input type="text" id="prompt-input" placeholder="Ask about AI skills or type prompt...">
-            <button id="send-btn">Send</button>
+    <!-- Floating Bottom Input Area (Gemini Style Pill) -->
+    <div class="p-4 bg-gradient-to-t from-white via-white/80 to-transparent shrink-0">
+        <div class="max-w-2xl mx-auto bg-white border border-pink-200 rounded-full px-4 py-3 shadow-lg flex items-center space-x-3 focus-within:border-pink-500 transition">
+            <button class="text-slate-400 hover:text-pink-600 transition p-1">
+                <i class="fa-solid fa-plus text-base"></i>
+            </button>
+            
+            <input type="text" id="prompt-input" class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm focus:outline-none font-medium" placeholder="Ask Gemini...">
+            
+            <button class="text-slate-400 hover:text-pink-600 transition p-1">
+                <i class="fa-solid fa-microphone text-base"></i>
+            </button>
+            <button id="send-btn" class="bg-pink-600 hover:bg-pink-700 text-white w-9 h-9 rounded-full flex items-center justify-center transition shadow-md">
+                <i class="fa-solid fa-arrow-up text-xs"></i>
+            </button>
         </div>
     </div>
 
     <script>
-        // API Key split configuration for security protection
+        // Secure API Key Split
         const p1 = "AQ.Ab8RN6";
         const p2 = "KYNobNtG0m";
         const p3 = "HnWmiTwIt";
         const p4 = "PwHIQF0umi";
         const p5 = "_K-jld1SV4Ta3Sg";
         const GEMINI_API_KEY = p1 + p2 + p3 + p4 + p5;
-        
+
         const chatContainer = document.getElementById('chat-container');
         const promptInput = document.getElementById('prompt-input');
         const sendBtn = document.getElementById('send-btn');
@@ -165,8 +91,7 @@
         }
 
         async function callGeminiAPI(promptText) {
-            // Updated to v1 and gemini-pro for stable API call execution
-            const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
             
             const payload = {
                 contents: [{ parts: [{ text: promptText }] }]
@@ -196,19 +121,20 @@
             const text = promptInput.value.trim();
             if (!text) return;
 
-            appendMessage(text, 'user-msg');
+            appendMessage(text, 'bg-pink-50 border-pink-100 text-slate-900 ml-auto');
             promptInput.value = '';
 
-            const loadingId = appendMessage('Thinking...', 'ai-msg');
+            const loadingId = appendMessage('Thinking...', 'bg-white border-pink-100 text-pink-600 animate-pulse');
             const aiResponse = await callGeminiAPI(text);
             
+            loadingId.className = 'p-4 bg-white border border-pink-100 rounded-2xl shadow-sm text-sm text-slate-800 whitespace-pre-line';
             loadingId.innerText = aiResponse;
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
         function appendMessage(text, className) {
             const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${className}`;
+            msgDiv.className = `p-4 rounded-2xl border shadow-sm text-sm max-w-[85%] ${className}`;
             msgDiv.innerText = text;
             chatContainer.appendChild(msgDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
