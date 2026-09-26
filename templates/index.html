@@ -3,167 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini OmniAI - Complete AI Assistant & Suite</title>
+    <title>Gemini OmniAI Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         .bg-gradient-wallpaper {
             background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%, #e0e7ff 100%);
         }
+        /* Hidden drawer style for mobile/desktop toggle */
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
     </style>
 </head>
-<body class="bg-gradient-wallpaper text-slate-800 font-sans antialiased h-screen flex overflow-hidden">
+<body class="bg-gradient-wallpaper text-slate-800 font-sans antialiased h-screen flex flex-col overflow-hidden relative">
 
-    <!-- Sidebar (Light Theme Clean Style) -->
-    <aside id="sidebar" class="w-64 bg-white/80 backdrop-blur-md flex flex-col justify-between border-r border-slate-200 transition-all duration-300 z-20 shadow-sm">
-        <div>
-            <div class="p-4 flex items-center justify-between">
-                <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition">
-                    <i class="fa-solid fa-bars text-lg"></i>
-                </button>
-                <button onclick="startNewChat()" class="hidden md:flex items-center space-x-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full text-xs font-semibold transition">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>New Chat</span>
-                </button>
-            </div>
-
-            <!-- Navigation Modules -->
-            <div class="px-3 py-2 space-y-1">
-                <p class="px-3 pb-2 text-[11px] font-bold tracking-wider uppercase text-slate-400">AI Capabilities</p>
-                <button onclick="selectModule('chat')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full bg-blue-600 text-white text-sm font-medium shadow-sm">
-                    <i class="fa-solid fa-sparkles text-white"></i>
-                    <span>Gemini AI Chat</span>
-                </button>
-                <button onclick="selectModule('prompt')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-slate-100 text-slate-600 text-sm font-medium transition">
-                    <i class="fa-solid fa-terminal text-purple-600"></i>
-                    <span>Prompt Engineering</span>
-                </button>
-                <button onclick="selectModule('content')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-slate-100 text-slate-600 text-sm font-medium transition">
-                    <i class="fa-solid fa-pen-nib text-indigo-600"></i>
-                    <span>Content Creation</span>
-                </button>
-                <button onclick="selectModule('video')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-slate-100 text-slate-600 text-sm font-medium transition">
-                    <i class="fa-solid fa-video text-pink-600"></i>
-                    <span>Video & Reels AI</span>
-                </button>
-                <button onclick="selectModule('marketing')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-slate-100 text-slate-600 text-sm font-medium transition">
-                    <i class="fa-solid fa-bullhorn text-amber-600"></i>
-                    <span>Marketing Automation</span>
-                </button>
-                <button onclick="selectModule('design')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-slate-100 text-slate-600 text-sm font-medium transition">
-                    <i class="fa-solid fa-wand-magic-sparkles text-cyan-600"></i>
-                    <span>Design & Creativity</span>
-                </button>
-                <button onclick="selectModule('data')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-slate-100 text-slate-600 text-sm font-medium transition">
-                    <i class="fa-solid fa-chart-line text-emerald-600"></i>
-                    <span>Data & Analytics</span>
-                </button>
-                <button onclick="selectModule('branding')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-slate-100 text-slate-600 text-sm font-medium transition">
-                    <i class="fa-solid fa-user-shield text-violet-600"></i>
-                    <span>Personal Branding</span>
-                </button>
+    <!-- Top Navigation Bar (Gemini Style) -->
+    <header class="h-16 flex items-center justify-between px-4 bg-transparent z-30 shrink-0">
+        <div class="flex items-center space-x-3">
+            <!-- 3 Lines Menu Button -->
+            <button onclick="toggleSidebar()" class="p-2.5 rounded-full hover:bg-slate-200/60 text-slate-700 transition" title="Toggle Menu">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+            <div class="flex items-center space-x-1 font-medium text-slate-700 text-sm md:text-base">
+                <span>Gemini</span>
+                <span class="text-slate-400 font-normal text-xs md:text-sm flex items-center space-x-1 cursor-pointer hover:text-slate-600">
+                    <span>Flash-Lite</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </span>
             </div>
         </div>
 
-        <div class="p-4 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
-            <span>OmniAI v2.0 Pro</span>
-            <i class="fa-solid fa-shield-halved text-emerald-500"></i>
+        <div class="flex items-center space-x-2">
+            <!-- Action Tool Icon -->
+            <button class="p-2.5 rounded-full hover:bg-slate-200/60 text-slate-700 transition" title="New Workspace">
+                <i class="fa-solid fa-pen-to-square text-base"></i>
+            </button>
+            <!-- User Login Profile Icon -->
+            <div class="h-9 w-9 rounded-full overflow-hidden border border-slate-300 shadow-sm flex items-center justify-center bg-blue-600 text-white font-bold text-xs cursor-pointer" title="Logged In User">
+                AI
+            </div>
         </div>
-    </aside>
+    </header>
 
-    <!-- Main Workspace Area -->
-    <main class="flex-1 flex flex-col h-full relative overflow-hidden">
+    <!-- Main Container with Sliding Sidebar -->
+    <div class="flex-1 flex relative overflow-hidden">
         
-        <!-- Top App Bar -->
-        <header class="h-16 flex items-center justify-between px-6 border-b border-slate-200/80 bg-white/50 backdrop-blur-md">
-            <div class="flex items-center space-x-3">
-                <span class="text-lg font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-600 bg-clip-text text-transparent">Gemini OmniAI Studio</span>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div class="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white text-sm shadow-md">
-                    AI
+        <!-- Sidebar Drawer (Hidden by default or toggled via 3 lines) -->
+        <aside id="sidebar" class="absolute inset-y-0 left-0 w-72 bg-white/95 backdrop-blur-xl border-r border-slate-200 shadow-2xl flex flex-col justify-between transition-transform duration-300 z-40 sidebar-hidden">
+            <div>
+                <div class="p-4 flex items-center justify-between border-b border-slate-100">
+                    <span class="font-bold text-slate-800 text-sm">AI Capabilities & Suites</span>
+                    <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-slate-100 text-slate-500">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Navigation Modules List -->
+                <div class="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-130px)]">
+                    <button onclick="selectModule('chat'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600 text-sm font-medium transition">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <span>Gemini AI Chat</span>
+                    </button>
+                    <button onclick="selectModule('prompt'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
+                        <i class="fa-solid fa-terminal text-purple-600"></i>
+                        <span>Prompt Engineering</span>
+                    </button>
+                    <button onclick="selectModule('content'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
+                        <i class="fa-solid fa-pen-nib text-indigo-600"></i>
+                        <span>Content Creation</span>
+                    </button>
+                    <button onclick="selectModule('video'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
+                        <i class="fa-solid fa-video text-pink-600"></i>
+                        <span>Video & Reels AI</span>
+                    </button>
+                    <button onclick="selectModule('marketing'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
+                        <i class="fa-solid fa-bullhorn text-amber-600"></i>
+                        <span>Marketing Automation</span>
+                    </button>
+                    <button onclick="selectModule('design'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
+                        <i class="fa-solid fa-wand-magic-sparkles text-cyan-600"></i>
+                        <span>Design & Creativity</span>
+                    </button>
+                    <button onclick="selectModule('data'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
+                        <i class="fa-solid fa-chart-line text-emerald-600"></i>
+                        <span>Data & Analytics</span>
+                    </button>
+                    <button onclick="selectModule('branding'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
+                        <i class="fa-solid fa-user-shield text-violet-600"></i>
+                        <span>Personal Branding</span>
+                    </button>
                 </div>
             </div>
-        </header>
 
-        <!-- Dynamic Content Area -->
-        <div id="workspace" class="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col items-center justify-between max-w-4xl w-full mx-auto">
+            <div class="p-4 border-t border-slate-100 text-xs text-slate-400 flex items-center justify-between">
+                <span>OmniAI v2.0 Pro</span>
+                <i class="fa-solid fa-shield-halved text-emerald-500"></i>
+            </div>
+        </aside>
+
+        <!-- Overlay for Sidebar -->
+        <div id="sidebar-overlay" onclick="toggleSidebar()" class="absolute inset-0 bg-black/20 backdrop-blur-xs hidden z-30 transition-opacity"></div>
+
+        <!-- Central Workspace Area (Clean & Clear) -->
+        <main class="flex-1 flex flex-col h-full relative overflow-y-auto px-4 pb-6 max-w-3xl mx-auto justify-between">
             
-            <!-- CHAT / DEFAULT GEMINI INTERFACE -->
-            <div id="view-chat" class="w-full flex-1 flex flex-col justify-center items-center text-center space-y-6">
-                <div id="welcome-banner" class="space-y-2">
-                    <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900">
+            <!-- Default Clear Chat / Welcome Area -->
+            <div id="view-chat" class="flex-1 flex flex-col justify-center items-center text-center space-y-4 my-auto">
+                <div id="welcome-banner" class="space-y-1">
+                    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight">
                         Hello, Creator
                     </h1>
-                    <p class="text-slate-500 text-lg">How can I help you build, write, design, or automate today?</p>
+                    <p class="text-slate-500 text-base">How can I help you today?</p>
                 </div>
                 
-                <div id="chat-messages" class="w-full space-y-4 text-left overflow-y-auto max-h-[50vh] hidden pr-2">
-                    <!-- Dynamic Messages will append here -->
+                <div id="chat-messages" class="w-full space-y-4 text-left overflow-y-auto max-h-[40vh] hidden pr-2">
+                    <!-- Dynamic Messages -->
                 </div>
             </div>
 
-            <!-- MODULE VIEWS (Hidden by default, shown when selected from sidebar) -->
-            <div id="view-module" class="w-full hidden overflow-y-auto py-4 space-y-6">
-                <div id="module-container" class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xl">
+            <!-- Dynamic Module View Area -->
+            <div id="view-module" class="w-full hidden my-auto py-4">
+                <div id="module-container" class="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-lg">
                     <!-- Module contents injected dynamically -->
                 </div>
             </div>
 
-            <!-- GOOGLE GEMINI STYLE BOTTOM SEARCH / PROMPT BAR -->
-            <div class="w-full pb-4 pt-2">
-                <div class="bg-white rounded-3xl p-3 border border-slate-200 shadow-xl focus-within:border-blue-500 transition-all">
-                    <textarea id="main-input" rows="1" class="w-full bg-transparent text-slate-800 placeholder-slate-400 focus:outline-none resize-none px-3 text-sm md:text-base" placeholder="Enter a prompt, ask a question, or describe a task..."></textarea>
-                    
-                    <div class="flex items-center justify-between pt-2 px-2 border-t border-slate-100 mt-2">
-                        <!-- Left Media Upload Buttons -->
-                        <div class="flex items-center space-x-2 text-slate-500">
-                            <label class="cursor-pointer hover:text-blue-600 p-2 rounded-full hover:bg-blue-50 transition" title="Upload Photo">
-                                <i class="fa-regular fa-image text-lg"></i>
-                                <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(event, 'photo')">
-                            </label>
-                            <label class="cursor-pointer hover:text-blue-600 p-2 rounded-full hover:bg-blue-50 transition" title="Upload Video / Reel">
-                                <i class="fa-solid fa-video text-lg"></i>
-                                <input type="file" accept="video/*" class="hidden" onchange="handleFileUpload(event, 'video')">
-                            </label>
-                            <button onclick="triggerMic()" class="hover:text-blue-600 p-2 rounded-full hover:bg-blue-50 transition" title="Voice Input">
-                                <i class="fa-solid fa-microphone text-lg"></i>
-                            </button>
-                        </div>
+            <!-- Bottom Floating Prompt Box (Exact Gemini Style) -->
+            <div class="w-full pt-4 shrink-0">
+                <div class="bg-white/90 backdrop-blur-md rounded-full px-4 py-2.5 border border-slate-200 shadow-lg flex items-center space-x-3 focus-within:border-blue-500 transition-all">
+                    <!-- Plus Attachment Button -->
+                    <label class="cursor-pointer text-slate-400 hover:text-slate-600 p-1.5 transition" title="Add File / Photo">
+                        <i class="fa-solid fa-plus text-lg"></i>
+                        <input type="file" accept="image/*,video/*" class="hidden" onchange="handleFileUpload(event)">
+                    </label>
 
-                        <!-- Right Send Button -->
-                        <button onclick="sendUserPrompt()" class="bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-full w-10 h-10 flex items-center justify-center transition shadow-md">
-                            <i class="fa-solid fa-arrow-up text-sm font-bold"></i>
+                    <!-- Main Text Input -->
+                    <input type="text" id="main-input" class="w-full bg-transparent text-slate-800 placeholder-slate-400 focus:outline-none text-sm md:text-base" placeholder="Ask Gemini">
+
+                    <!-- Mic & Audio Wave Icons -->
+                    <div class="flex items-center space-x-2 text-slate-400">
+                        <button onclick="triggerMic()" class="hover:text-slate-600 p-1.5 transition" title="Voice Input">
+                            <i class="fa-solid fa-microphone text-base"></i>
+                        </button>
+                        <button onclick="sendUserPrompt()" class="hover:text-blue-600 p-1.5 transition" title="Send Prompt">
+                            <i class="fa-solid fa-arrow-up text-base"></i>
                         </button>
                     </div>
                 </div>
-                <div id="status-alert" class="hidden text-center text-xs text-blue-600 mt-2 font-medium bg-blue-50 py-1 px-3 rounded-full inline-block mx-auto"></div>
-                <p class="text-[11px] text-center text-slate-400 mt-2">Gemini may display inaccurate info. Verify important responses.</p>
+                <div id="status-alert" class="hidden text-center text-xs text-blue-600 mt-2 font-medium bg-blue-50/80 py-1 px-3 rounded-full inline-block mx-auto"></div>
+                <p class="text-[11px] text-center text-slate-400 mt-2">Gemini may display inaccurate info, including about people, so double-check its responses.</p>
             </div>
 
-        </div>
-    </main>
+        </main>
+    </div>
 
-    <!-- JavaScript Controller Logic -->
+    <!-- JavaScript Controllers -->
     <script>
         let currentModule = 'chat';
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('w-64');
-            sidebar.classList.toggle('w-20');
-        }
-
-        function startNewChat() {
-            document.getElementById('welcome-banner').classList.remove('hidden');
-            document.getElementById('chat-messages').classList.add('hidden');
-            document.getElementById('chat-messages').innerHTML = '';
-            document.getElementById('view-chat').classList.remove('hidden');
-            document.getElementById('view-module').classList.add('hidden');
-            currentModule = 'chat';
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('sidebar-hidden');
+            overlay.classList.toggle('hidden');
         }
 
         function selectModule(mod) {
@@ -177,41 +183,41 @@
 
             if(mod === 'prompt') {
                 container.innerHTML = `
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="p-3 bg-purple-50 text-purple-600 rounded-xl"><i class="fa-solid fa-terminal text-lg"></i></div>
-                        <div><h2 class="text-xl font-bold text-slate-800">Prompt Engineering Studio</h2><p class="text-sm text-slate-500">Talk to AI the right way. Better Prompts = Better Results.</p></div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="p-2.5 bg-purple-50 text-purple-600 rounded-xl"><i class="fa-solid fa-terminal"></i></div>
+                        <div><h2 class="text-lg font-bold text-slate-800">Prompt Engineering Studio</h2><p class="text-xs text-slate-500">Optimize your prompts for maximum AI output.</p></div>
                     </div>
-                    <textarea id="raw-prompt" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-800 focus:outline-none focus:border-purple-500 mb-4" placeholder="Enter raw idea..."></textarea>
-                    <button onclick="runPromptOpt()" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl text-sm transition shadow-sm">Optimize Prompt</button>
-                    <div id="prompt-res" class="hidden mt-4 p-4 bg-purple-50 rounded-xl border border-purple-100 text-sm text-purple-900"></div>
+                    <textarea id="raw-prompt" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-purple-500 mb-3" placeholder="Enter raw idea..."></textarea>
+                    <button onclick="runPromptOpt()" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl text-xs transition">Optimize Prompt</button>
+                    <div id="prompt-res" class="hidden mt-3 p-3 bg-purple-50 rounded-xl border border-purple-100 text-xs text-purple-900"></div>
                 `;
             } else if(mod === 'content') {
                 container.innerHTML = `
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl"><i class="fa-solid fa-pen-nib text-lg"></i></div>
-                        <div><h2 class="text-xl font-bold text-slate-800">AI Content Generator</h2><p class="text-sm text-slate-500">Creating posts, blogs, and ads in minutes.</p></div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl"><i class="fa-solid fa-pen-nib"></i></div>
+                        <div><h2 class="text-lg font-bold text-slate-800">AI Content Generator</h2><p class="text-xs text-slate-500">Create blog articles, captions & copy.</p></div>
                     </div>
-                    <input type="text" id="c-topic" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-indigo-500 mb-4" placeholder="Enter Topic / Niche...">
-                    <button onclick="runContentGen()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition shadow-sm">Generate Content</button>
-                    <div id="c-res" class="hidden mt-4 p-4 bg-indigo-50 rounded-xl border border-indigo-100 text-sm text-slate-700 whitespace-pre-line"></div>
+                    <input type="text" id="c-topic" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-indigo-500 mb-3" placeholder="Enter Topic / Niche...">
+                    <button onclick="runContentGen()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-xs transition">Generate Content</button>
+                    <div id="c-res" class="hidden mt-3 p-3 bg-indigo-50 rounded-xl border border-indigo-100 text-xs text-slate-700 whitespace-pre-line"></div>
                 `;
             } else if(mod === 'video') {
                 container.innerHTML = `
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="p-3 bg-pink-50 text-pink-600 rounded-xl"><i class="fa-solid fa-video text-lg"></i></div>
-                        <div><h2 class="text-xl font-bold text-slate-800">AI Video & Reels Generator</h2><p class="text-sm text-slate-500">Reels & Shorts without cameras.</p></div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="p-2.5 bg-pink-50 text-pink-600 rounded-xl"><i class="fa-solid fa-video"></i></div>
+                        <div><h2 class="text-lg font-bold text-slate-800">AI Video & Reels Generator</h2><p class="text-xs text-slate-500">Reels & Shorts scripts generator.</p></div>
                     </div>
-                    <textarea id="v-script" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-800 focus:outline-none focus:border-pink-500 mb-4" placeholder="Describe your reel script or concept..."></textarea>
-                    <button onclick="runVideoGen()" class="px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-xl text-sm transition shadow-sm">Render AI Reel</button>
-                    <div id="v-res" class="hidden mt-4 p-4 bg-pink-50 rounded-xl border border-pink-100 text-center text-pink-700"><i class="fa-solid fa-circle-play text-3xl animate-pulse mb-2"></i><p>Synthesizing Reel Timeline...</p></div>
+                    <textarea id="v-script" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-pink-500 mb-3" placeholder="Describe your reel concept..."></textarea>
+                    <button onclick="runVideoGen()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-xl text-xs transition">Render AI Reel</button>
+                    <div id="v-res" class="hidden mt-3 p-3 bg-pink-50 rounded-xl border border-pink-100 text-center text-pink-700 text-xs"><i class="fa-solid fa-circle-play text-2xl animate-pulse mb-1"></i><p>Synthesizing Reel Timeline...</p></div>
                 `;
             } else {
                 container.innerHTML = `
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="p-3 bg-blue-50 text-blue-600 rounded-xl"><i class="fa-solid fa-sparkles text-lg"></i></div>
-                        <div><h2 class="text-xl font-bold text-slate-800">${mod.toUpperCase()} Suite Active</h2><p class="text-sm text-slate-500">Automated intelligence tools ready for execution.</p></div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="p-2.5 bg-blue-50 text-blue-600 rounded-xl"><i class="fa-solid fa-sparkles"></i></div>
+                        <div><h2 class="text-lg font-bold text-slate-800">${mod.toUpperCase()} Suite Active</h2><p class="text-xs text-slate-500">Automated intelligence tools ready.</p></div>
                     </div>
-                    <p class="text-sm text-slate-600">Use the bottom search bar to execute queries or ask Gemini assistance for ${mod}.</p>
+                    <p class="text-xs text-slate-600">Use the bottom prompt bar to interact with ${mod}.</p>
                 `;
             }
         }
@@ -232,35 +238,34 @@
                 document.getElementById('welcome-banner').classList.add('hidden');
                 const chatBox = document.getElementById('chat-messages');
                 chatBox.classList.remove('hidden');
-                document.getElementById('view-chat').classList.remove('justify-center');
 
                 chatBox.innerHTML += `
-                    <div class="flex items-start space-x-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs">You</div>
-                        <div class="text-sm text-slate-700 mt-1">${val}</div>
+                    <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs md:text-sm">
+                        <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-[10px]">You</div>
+                        <div class="text-slate-700 mt-0.5">${val}</div>
                     </div>
-                    <div class="flex items-start space-x-3 bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white text-xs"><i class="fa-solid fa-sparkles"></i></div>
-                        <div class="text-sm text-slate-700 mt-1">✨ Processing your request via Gemini OmniAI Engine regarding: "<strong>${val}</strong>". All systems are aligned to assist you successfully.</div>
+                    <div class="flex items-start space-x-3 bg-blue-50/50 p-3 rounded-2xl border border-blue-100 text-xs md:text-sm">
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white text-[10px]"><i class="fa-solid fa-sparkles"></i></div>
+                        <div class="text-slate-700 mt-0.5">✨ Gemini OmniAI Engine response regarding: "<strong>${val}</strong>". All modules are ready to assist.</div>
                     </div>
                 `;
                 input.value = '';
                 chatBox.scrollTop = chatBox.scrollHeight;
             } else {
-                showStatus('Query executed successfully for module: ' + currentModule);
+                showStatus('Query executed for module: ' + currentModule);
                 input.value = '';
             }
         }
 
-        function handleFileUpload(event, type) {
+        function handleFileUpload(event) {
             const file = event.target.files[0];
             if(file) {
-                showStatus(`${type.toUpperCase()} uploaded: ${file.name}. Gemini is analyzing.`);
+                showStatus(`File uploaded: ${file.name}. Analyzing...`);
             }
         }
 
         function triggerMic() {
-            showStatus('Listening... Speak your voice prompt into the microphone.');
+            showStatus('Listening... Speak your prompt now.');
         }
 
         function runPromptOpt() {
@@ -268,7 +273,7 @@
             const res = document.getElementById('prompt-res');
             if(!text) return;
             res.classList.remove('hidden');
-            res.innerHTML = `<strong>✨ Optimized Gemini Prompt:</strong><br>"Act as an expert. Provide an in-depth structured framework for: <em>${text}</em> with maximum precision."`;
+            res.innerHTML = `<strong>✨ Optimized:</strong> Act as an expert and provide an in-depth framework for: <em>${text}</em>.`;
         }
 
         function runContentGen() {
@@ -276,7 +281,7 @@
             const res = document.getElementById('c-res');
             if(!top) return;
             res.classList.remove('hidden');
-            res.innerHTML = `🚀 <strong>Generated Post for "${top}":</strong>\n\nDiscover the next evolution of ${top}! Stay ahead of the curve with automated AI workflows.\n\n#${top.replace(/\s+/g, '')} #Innovation`; 
+            res.innerHTML = `🚀 <strong>Post for "${top}":</strong> Discover the power of automated AI workflows.\n\n#${top.replace(/\s+/g, '')} #AI`;
         }
 
         function runVideoGen() {
@@ -285,7 +290,7 @@
             if(!script) return;
             res.classList.remove('hidden');
             setTimeout(() => {
-                res.innerHTML = `<i class="fa-solid fa-circle-check text-3xl text-emerald-600 mb-2"></i><p class="font-semibold text-slate-800">AI Reel Exported Successfully!</p>`;
+                res.innerHTML = `<i class="fa-solid fa-circle-check text-2xl text-emerald-600 mb-1"></i><p class="font-semibold text-slate-800 text-xs">AI Reel Exported Successfully!</p>`;
             }, 2000);
         }
     </script>
