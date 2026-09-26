@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini OmniAI Studio</title>
+    <title>OmniSpark AI Studio - Free AI Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,7 +13,6 @@
         .bg-gradient-wallpaper {
             background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%, #e0e7ff 100%);
         }
-        /* Hidden drawer style for mobile/desktop toggle */
         .sidebar-hidden {
             transform: translateX(-100%);
         }
@@ -21,30 +20,28 @@
 </head>
 <body class="bg-gradient-wallpaper text-slate-800 font-sans antialiased h-screen flex flex-col overflow-hidden relative">
 
-    <!-- Top Navigation Bar (Gemini Style) -->
+    <!-- Top Navigation Bar -->
     <header class="h-16 flex items-center justify-between px-4 bg-transparent z-30 shrink-0">
         <div class="flex items-center space-x-3">
             <!-- 3 Lines Menu Button -->
             <button onclick="toggleSidebar()" class="p-2.5 rounded-full hover:bg-slate-200/60 text-slate-700 transition" title="Toggle Menu">
                 <i class="fa-solid fa-bars text-lg"></i>
             </button>
-            <div class="flex items-center space-x-1 font-medium text-slate-700 text-sm md:text-base">
-                <span>Gemini</span>
-                <span class="text-slate-400 font-normal text-xs md:text-sm flex items-center space-x-1 cursor-pointer hover:text-slate-600">
-                    <span>Flash-Lite</span>
-                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                </span>
+            <div class="flex items-center space-x-2 font-bold text-slate-800 text-base md:text-lg tracking-tight">
+                <i class="fa-solid fa-sparkles text-blue-600"></i>
+                <span>OmniSpark</span>
+                <span class="bg-blue-100 text-blue-700 text-[10px] font-semibold px-2 py-0.5 rounded-full">100% Free</span>
             </div>
         </div>
 
         <div class="flex items-center space-x-2">
-            <!-- Action Tool Icon -->
-            <button class="p-2.5 rounded-full hover:bg-slate-200/60 text-slate-700 transition" title="New Workspace">
+            <!-- New Chat / Reset Button -->
+            <button onclick="startNewChat()" class="p-2.5 rounded-full hover:bg-slate-200/60 text-slate-700 transition" title="New Workspace">
                 <i class="fa-solid fa-pen-to-square text-base"></i>
             </button>
             <!-- User Login Profile Icon -->
-            <div class="h-9 w-9 rounded-full overflow-hidden border border-slate-300 shadow-sm flex items-center justify-center bg-blue-600 text-white font-bold text-xs cursor-pointer" title="Logged In User">
-                AI
+            <div class="h-9 w-9 rounded-full overflow-hidden border border-slate-300 shadow-sm flex items-center justify-center bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold text-xs cursor-pointer" title="Free Account Active">
+                OS
             </div>
         </div>
     </header>
@@ -52,11 +49,11 @@
     <!-- Main Container with Sliding Sidebar -->
     <div class="flex-1 flex relative overflow-hidden">
         
-        <!-- Sidebar Drawer (Hidden by default or toggled via 3 lines) -->
+        <!-- Sidebar Drawer (Triggered by 3 lines) -->
         <aside id="sidebar" class="absolute inset-y-0 left-0 w-72 bg-white/95 backdrop-blur-xl border-r border-slate-200 shadow-2xl flex flex-col justify-between transition-transform duration-300 z-40 sidebar-hidden">
             <div>
                 <div class="p-4 flex items-center justify-between border-b border-slate-100">
-                    <span class="font-bold text-slate-800 text-sm">AI Capabilities & Suites</span>
+                    <span class="font-bold text-slate-800 text-sm">OmniSpark Free Suites</span>
                     <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-slate-100 text-slate-500">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
@@ -65,8 +62,8 @@
                 <!-- Navigation Modules List -->
                 <div class="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-130px)]">
                     <button onclick="selectModule('chat'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600 text-sm font-medium transition">
-                        <i class="fa-solid fa-sparkles"></i>
-                        <span>Gemini AI Chat</span>
+                        <i class="fa-solid fa-comments"></i>
+                        <span>AI Assistant Chat</span>
                     </button>
                     <button onclick="selectModule('prompt'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-terminal text-purple-600"></i>
@@ -74,11 +71,11 @@
                     </button>
                     <button onclick="selectModule('content'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-pen-nib text-indigo-600"></i>
-                        <span>Content Creation</span>
+                        <span>Content & Blog Creator</span>
                     </button>
                     <button onclick="selectModule('video'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-video text-pink-600"></i>
-                        <span>Video & Reels AI</span>
+                        <span>Video & Reels Generator</span>
                     </button>
                     <button onclick="selectModule('marketing'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-bullhorn text-amber-600"></i>
@@ -100,7 +97,7 @@
             </div>
 
             <div class="p-4 border-t border-slate-100 text-xs text-slate-400 flex items-center justify-between">
-                <span>OmniAI v2.0 Pro</span>
+                <span>OmniSpark v2.5 Free</span>
                 <i class="fa-solid fa-shield-halved text-emerald-500"></i>
             </div>
         </aside>
@@ -108,19 +105,19 @@
         <!-- Overlay for Sidebar -->
         <div id="sidebar-overlay" onclick="toggleSidebar()" class="absolute inset-0 bg-black/20 backdrop-blur-xs hidden z-30 transition-opacity"></div>
 
-        <!-- Central Workspace Area (Clean & Clear) -->
+        <!-- Central Workspace Area -->
         <main class="flex-1 flex flex-col h-full relative overflow-y-auto px-4 pb-6 max-w-3xl mx-auto justify-between">
             
-            <!-- Default Clear Chat / Welcome Area -->
+            <!-- Default Welcome/Chat Area -->
             <div id="view-chat" class="flex-1 flex flex-col justify-center items-center text-center space-y-4 my-auto">
-                <div id="welcome-banner" class="space-y-1">
-                    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight">
+                <div id="welcome-banner" class="space-y-2">
+                    <h1 class="text-3xl md:text-5xl font-black text-slate-800 tracking-tight">
                         Hello, Creator
                     </h1>
-                    <p class="text-slate-500 text-base">How can I help you today?</p>
+                    <p class="text-slate-500 text-base md:text-lg">What do you want to create or build completely free today?</p>
                 </div>
                 
-                <div id="chat-messages" class="w-full space-y-4 text-left overflow-y-auto max-h-[40vh] hidden pr-2">
+                <div id="chat-messages" class="w-full space-y-4 text-left overflow-y-auto max-h-[45vh] hidden pr-2">
                     <!-- Dynamic Messages -->
                 </div>
             </div>
@@ -132,9 +129,9 @@
                 </div>
             </div>
 
-            <!-- Bottom Floating Prompt Box (Exact Gemini Style) -->
+            <!-- Bottom Floating Prompt Box -->
             <div class="w-full pt-4 shrink-0">
-                <div class="bg-white/90 backdrop-blur-md rounded-full px-4 py-2.5 border border-slate-200 shadow-lg flex items-center space-x-3 focus-within:border-blue-500 transition-all">
+                <div class="bg-white/90 backdrop-blur-md rounded-full px-4 py-3 border border-slate-200 shadow-xl flex items-center space-x-3 focus-within:border-blue-500 transition-all">
                     <!-- Plus Attachment Button -->
                     <label class="cursor-pointer text-slate-400 hover:text-slate-600 p-1.5 transition" title="Add File / Photo">
                         <i class="fa-solid fa-plus text-lg"></i>
@@ -142,20 +139,20 @@
                     </label>
 
                     <!-- Main Text Input -->
-                    <input type="text" id="main-input" class="w-full bg-transparent text-slate-800 placeholder-slate-400 focus:outline-none text-sm md:text-base" placeholder="Ask Gemini">
+                    <input type="text" id="main-input" class="w-full bg-transparent text-slate-800 placeholder-slate-400 focus:outline-none text-sm md:text-base" placeholder="Ask OmniSpark anything free...">
 
-                    <!-- Mic & Audio Wave Icons -->
+                    <!-- Mic & Send Icons -->
                     <div class="flex items-center space-x-2 text-slate-400">
                         <button onclick="triggerMic()" class="hover:text-slate-600 p-1.5 transition" title="Voice Input">
                             <i class="fa-solid fa-microphone text-base"></i>
                         </button>
-                        <button onclick="sendUserPrompt()" class="hover:text-blue-600 p-1.5 transition" title="Send Prompt">
-                            <i class="fa-solid fa-arrow-up text-base"></i>
+                        <button onclick="sendUserPrompt()" class="bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-full w-9 h-9 flex items-center justify-center transition shadow" title="Send Prompt">
+                            <i class="fa-solid fa-arrow-up text-sm"></i>
                         </button>
                     </div>
                 </div>
-                <div id="status-alert" class="hidden text-center text-xs text-blue-600 mt-2 font-medium bg-blue-50/80 py-1 px-3 rounded-full inline-block mx-auto"></div>
-                <p class="text-[11px] text-center text-slate-400 mt-2">Gemini may display inaccurate info, including about people, so double-check its responses.</p>
+                <div id="status-alert" class="hidden text-center text-xs text-blue-600 mt-2 font-medium bg-blue-50/90 py-1 px-3 rounded-full inline-block mx-auto"></div>
+                <p class="text-[11px] text-center text-slate-400 mt-2">OmniSpark Free AI provides unlimited assistance. Verify important outputs.</p>
             </div>
 
         </main>
@@ -172,6 +169,15 @@
             overlay.classList.toggle('hidden');
         }
 
+        function startNewChat() {
+            document.getElementById('welcome-banner').classList.remove('hidden');
+            document.getElementById('chat-messages').classList.add('hidden');
+            document.getElementById('chat-messages').innerHTML = '';
+            document.getElementById('view-chat').classList.remove('hidden');
+            document.getElementById('view-module').classList.add('hidden');
+            currentModule = 'chat';
+        }
+
         function selectModule(mod) {
             currentModule = mod;
             document.getElementById('welcome-banner').classList.add('hidden');
@@ -185,39 +191,39 @@
                 container.innerHTML = `
                     <div class="flex items-center space-x-3 mb-3">
                         <div class="p-2.5 bg-purple-50 text-purple-600 rounded-xl"><i class="fa-solid fa-terminal"></i></div>
-                        <div><h2 class="text-lg font-bold text-slate-800">Prompt Engineering Studio</h2><p class="text-xs text-slate-500">Optimize your prompts for maximum AI output.</p></div>
+                        <div><h2 class="text-lg font-bold text-slate-800">Prompt Engineering Studio</h2><p class="text-xs text-slate-500">Free tool to optimize prompts for maximum AI output.</p></div>
                     </div>
-                    <textarea id="raw-prompt" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-purple-500 mb-3" placeholder="Enter raw idea..."></textarea>
-                    <button onclick="runPromptOpt()" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl text-xs transition">Optimize Prompt</button>
+                    <textarea id="raw-prompt" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-purple-500 mb-3" placeholder="Enter raw idea here..."></textarea>
+                    <button onclick="runPromptOpt()" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl text-xs transition shadow">Optimize Prompt Free</button>
                     <div id="prompt-res" class="hidden mt-3 p-3 bg-purple-50 rounded-xl border border-purple-100 text-xs text-purple-900"></div>
                 `;
             } else if(mod === 'content') {
                 container.innerHTML = `
                     <div class="flex items-center space-x-3 mb-3">
                         <div class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl"><i class="fa-solid fa-pen-nib"></i></div>
-                        <div><h2 class="text-lg font-bold text-slate-800">AI Content Generator</h2><p class="text-xs text-slate-500">Create blog articles, captions & copy.</p></div>
+                        <div><h2 class="text-lg font-bold text-slate-800">Content & Blog Creator</h2><p class="text-xs text-slate-500">Generate articles, captions & copywriting free.</p></div>
                     </div>
                     <input type="text" id="c-topic" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-indigo-500 mb-3" placeholder="Enter Topic / Niche...">
-                    <button onclick="runContentGen()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-xs transition">Generate Content</button>
+                    <button onclick="runContentGen()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-xs transition shadow">Generate Content Free</button>
                     <div id="c-res" class="hidden mt-3 p-3 bg-indigo-50 rounded-xl border border-indigo-100 text-xs text-slate-700 whitespace-pre-line"></div>
                 `;
             } else if(mod === 'video') {
                 container.innerHTML = `
                     <div class="flex items-center space-x-3 mb-3">
                         <div class="p-2.5 bg-pink-50 text-pink-600 rounded-xl"><i class="fa-solid fa-video"></i></div>
-                        <div><h2 class="text-lg font-bold text-slate-800">AI Video & Reels Generator</h2><p class="text-xs text-slate-500">Reels & Shorts scripts generator.</p></div>
+                        <div><h2 class="text-lg font-bold text-slate-800">Video & Reels Generator</h2><p class="text-xs text-slate-500">Create viral reels scripts and timelines free.</p></div>
                     </div>
-                    <textarea id="v-script" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-pink-500 mb-3" placeholder="Describe your reel concept..."></textarea>
-                    <button onclick="runVideoGen()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-xl text-xs transition">Render AI Reel</button>
+                    <textarea id="v-script" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-pink-500 mb-3" placeholder="Describe your video/reel concept..."></textarea>
+                    <button onclick="runVideoGen()" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-xl text-xs transition shadow">Render AI Reel Free</button>
                     <div id="v-res" class="hidden mt-3 p-3 bg-pink-50 rounded-xl border border-pink-100 text-center text-pink-700 text-xs"><i class="fa-solid fa-circle-play text-2xl animate-pulse mb-1"></i><p>Synthesizing Reel Timeline...</p></div>
                 `;
             } else {
                 container.innerHTML = `
                     <div class="flex items-center space-x-3 mb-3">
                         <div class="p-2.5 bg-blue-50 text-blue-600 rounded-xl"><i class="fa-solid fa-sparkles"></i></div>
-                        <div><h2 class="text-lg font-bold text-slate-800">${mod.toUpperCase()} Suite Active</h2><p class="text-xs text-slate-500">Automated intelligence tools ready.</p></div>
+                        <div><h2 class="text-lg font-bold text-slate-800">${mod.toUpperCase()} Suite Active</h2><p class="text-xs text-slate-500">Free automated tools ready for task execution.</p></div>
                     </div>
-                    <p class="text-xs text-slate-600">Use the bottom prompt bar to interact with ${mod}.</p>
+                    <p class="text-xs text-slate-600">Use the bottom prompt bar to interact with ${mod} completely free.</p>
                 `;
             }
         }
@@ -240,19 +246,19 @@
                 chatBox.classList.remove('hidden');
 
                 chatBox.innerHTML += `
-                    <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs md:text-sm">
+                    <div class="flex items-start space-x-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs md:text-sm">
                         <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-[10px]">You</div>
                         <div class="text-slate-700 mt-0.5">${val}</div>
                     </div>
-                    <div class="flex items-start space-x-3 bg-blue-50/50 p-3 rounded-2xl border border-blue-100 text-xs md:text-sm">
+                    <div class="flex items-start space-x-3 bg-blue-50/60 p-3.5 rounded-2xl border border-blue-100 text-xs md:text-sm">
                         <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white text-[10px]"><i class="fa-solid fa-sparkles"></i></div>
-                        <div class="text-slate-700 mt-0.5">✨ Gemini OmniAI Engine response regarding: "<strong>${val}</strong>". All modules are ready to assist.</div>
+                        <div class="text-slate-700 mt-0.5">✨ OmniSpark AI Free Engine response regarding: "<strong>${val}</strong>". All modules are working successfully.</div>
                     </div>
                 `;
                 input.value = '';
                 chatBox.scrollTop = chatBox.scrollHeight;
             } else {
-                showStatus('Query executed for module: ' + currentModule);
+                showStatus('Free task executed successfully for module: ' + currentModule);
                 input.value = '';
             }
         }
@@ -260,12 +266,12 @@
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if(file) {
-                showStatus(`File uploaded: ${file.name}. Analyzing...`);
+                showStatus(`File uploaded free: ${file.name}. Analyzing...`);
             }
         }
 
         function triggerMic() {
-            showStatus('Listening... Speak your prompt now.');
+            showStatus('Listening... Speak your prompt free now.');
         }
 
         function runPromptOpt() {
@@ -273,7 +279,7 @@
             const res = document.getElementById('prompt-res');
             if(!text) return;
             res.classList.remove('hidden');
-            res.innerHTML = `<strong>✨ Optimized:</strong> Act as an expert and provide an in-depth framework for: <em>${text}</em>.`;
+            res.innerHTML = `<strong>✨ Free Optimized Prompt:</strong> Act as an expert professional and provide a structured high-precision framework for: <em>${text}</em>.`;
         }
 
         function runContentGen() {
@@ -281,7 +287,7 @@
             const res = document.getElementById('c-res');
             if(!top) return;
             res.classList.remove('hidden');
-            res.innerHTML = `🚀 <strong>Post for "${top}":</strong> Discover the power of automated AI workflows.\n\n#${top.replace(/\s+/g, '')} #AI`;
+            res.innerHTML = `🚀 <strong>Free Generated Post for "${top}":</strong>\n\nDiscover the next level of innovation with ${top}! Stay ahead with completely free AI automated workflows.\n\n#${top.replace(/\s+/g, '')} #OmniSpark`;
         }
 
         function runVideoGen() {
@@ -290,7 +296,7 @@
             if(!script) return;
             res.classList.remove('hidden');
             setTimeout(() => {
-                res.innerHTML = `<i class="fa-solid fa-circle-check text-2xl text-emerald-600 mb-1"></i><p class="font-semibold text-slate-800 text-xs">AI Reel Exported Successfully!</p>`;
+                res.innerHTML = `<i class="fa-solid fa-circle-check text-2xl text-emerald-600 mb-1"></i><p class="font-semibold text-slate-800 text-xs">Free AI Reel Rendered & Exported Successfully!</p>`;
             }, 2000);
         }
     </script>
