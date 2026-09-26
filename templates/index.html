@@ -1,195 +1,298 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Mobile Clone</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-        body {
-            background: #0f172a;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .phone-frame {
-            width: 100%;
-            max-width: 414px;
-            height: 100%;
-            max-height: 896px;
-            background: #000;
-            border-radius: 0px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-        @media (min-width: 480px) {
-            .phone-frame {
-                height: 90vh;
-                border-radius: 40px;
-                border: 10px solid #2d3748;
+    <title>Gemini OmniAI - Complete AI Assistant & Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        geminiDark: '#131314',
+                        geminiCard: '#1e1f20',
+                        geminiInput: '#282a2c',
+                        geminiHover: '#333537',
+                        geminiAccent: '#8ab4f8'
+                    }
+                }
             }
         }
-        .status-bar {
-            height: 40px;
-            background: rgba(0, 0, 0, 0.4);
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 10;
-        }
-        .home-screen {
-            flex: 1;
-            background: linear-gradient(135deg, #4338ca, #6d28d9, #0284c7);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow-y: auto;
-        }
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px 15px;
-        }
-        .app-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .app-icon:active {
-            transform: scale(0.92);
-        }
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 26px;
-            color: #fff;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            margin-bottom: 6px;
-        }
-        .app-name {
-            color: #fff;
-            font-size: 12px;
-            text-align: center;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-        }
-        .dock {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-top: 20px;
-        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3c4043; border-radius: 4px; }
     </style>
 </head>
-<body>
+<body class="bg-geminiDark text-gray-100 font-sans antialiased h-screen flex overflow-hidden">
 
-    <div class="phone-frame">
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <span id="clock">15:50</span>
-            <span>5G 🔋</span>
-        </div>
-
-        <!-- Home Screen -->
-        <div class="home-screen" id="homeScreen">
-            <div class="app-grid">
-                <!-- YouTube -->
-                <a class="app-icon" href="https://m.youtube.com" target="_blank">
-                    <div class="icon-box" style="background: #ff0000;">▶</div>
-                    <span class="app-name">YouTube</span>
-                </a>
-                <!-- Amazon -->
-                <a class="app-icon" href="https://www.amazon.in" target="_blank">
-                    <div class="icon-box" style="background: #ff9900;">🛒</div>
-                    <span class="app-name">Amazon</span>
-                </a>
-                <!-- Flipkart -->
-                <a class="app-icon" href="https://www.flipkart.com" target="_blank">
-                    <div class="icon-box" style="background: #2874f0;">🛍️</div>
-                    <span class="app-name">Flipkart</span>
-                </a>
-                <!-- Instagram -->
-                <a class="app-icon" href="https://www.instagram.com" target="_blank">
-                    <div class="icon-box" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);">📸</div>
-                    <span class="app-name">Instagram</span>
-                </a>
-                <!-- Google -->
-                <a class="app-icon" href="https://www.google.com" target="_blank">
-                    <div class="icon-box" style="background: #ffffff; color: #4285F4;">G</div>
-                    <span class="app-name">Google</span>
-                </a>
-                <!-- Wikipedia -->
-                <a class="app-icon" href="https://www.wikipedia.org" target="_blank">
-                    <div class="icon-box" style="background: #f8f9fa; color: #000;">W</div>
-                    <span class="app-name">Wikipedia</span>
-                </a>
-                <!-- Calculator -->
-                <a class="app-icon" href="https://www.online-calculator.com/full-screen-calculator.php" target="_blank">
-                    <div class="icon-box" style="background: #334155;">🔢</div>
-                    <span class="app-name">Calculator</span>
-                </a>
-                <!-- Weather -->
-                <a class="app-icon" href="https://weather.com" target="_blank">
-                    <div class="icon-box" style="background: #0ea5e9;">🌤️</div>
-                    <span class="app-name">Weather</span>
-                </a>
+    <!-- Sidebar (Gemini Style) -->
+    <aside id="sidebar" class="w-64 bg-[#1e1f20] flex flex-col justify-between border-r border-slate-800 transition-all duration-300 z-20">
+        <div>
+            <div class="p-4 flex items-center justify-between">
+                <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-geminiHover text-slate-300">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+                <button onclick="startNewChat()" class="hidden md:flex items-center space-x-2 px-4 py-2 bg-[#282a2c] hover:bg-geminiHover rounded-full text-xs font-medium text-slate-200">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>New Chat</span>
+                </button>
             </div>
 
-            <!-- Dock at bottom -->
-            <div class="dock">
-                <a class="app-icon" href="https://www.google.com" target="_blank">
-                    <div class="icon-box" style="background: #22c55e; width: 50px; height: 50px; font-size: 20px;">📞</div>
-                </a>
-                <a class="app-icon" href="https://www.google.com" target="_blank">
-                    <div class="icon-box" style="background: #3b82f6; width: 50px; height: 50px; font-size: 20px;">🌐</div>
-                </a>
-                <a class="app-icon" href="https://www.google.com" target="_blank">
-                    <div class="icon-box" style="background: #64748b; width: 50px; height: 50px; font-size: 20px;">📷</div>
-                </a>
+            <!-- Navigation Modules -->
+            <div class="px-3 py-2 space-y-1">
+                <p class="px-3 pb-2 text-[11px] font-bold tracking-wider uppercase text-slate-400">AI Capabilities</p>
+                <button onclick="selectModule('chat')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full bg-[#282a2c] text-white text-sm font-medium">
+                    <i class="fa-solid fa-sparkles text-geminiAccent"></i>
+                    <span>Gemini AI Chat</span>
+                </button>
+                <button onclick="selectModule('prompt')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-geminiHover text-slate-300 text-sm font-medium">
+                    <i class="fa-solid fa-terminal text-purple-400"></i>
+                    <span>Prompt Engineering</span>
+                </button>
+                <button onclick="selectModule('content')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-geminiHover text-slate-300 text-sm font-medium">
+                    <i class="fa-solid fa-pen-nib text-indigo-400"></i>
+                    <span>Content Creation</span>
+                </button>
+                <button onclick="selectModule('video')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-geminiHover text-slate-300 text-sm font-medium">
+                    <i class="fa-solid fa-video text-pink-400"></i>
+                    <span>Video & Reels AI</span>
+                </button>
+                <button onclick="selectModule('marketing')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-geminiHover text-slate-300 text-sm font-medium">
+                    <i class="fa-solid fa-bullhorn text-amber-400"></i>
+                    <span>Marketing Automation</span>
+                </button>
+                <button onclick="selectModule('design')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-geminiHover text-slate-300 text-sm font-medium">
+                    <i class="fa-solid fa-wand-magic-sparkles text-cyan-400"></i>
+                    <span>Design & Creativity</span>
+                </button>
+                <button onclick="selectModule('data')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-geminiHover text-slate-300 text-sm font-medium">
+                    <i class="fa-solid fa-chart-line text-emerald-400"></i>
+                    <span>Data & Analytics</span>
+                </button>
+                <button onclick="selectModule('branding')" class="mod-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-full hover:bg-geminiHover text-slate-300 text-sm font-medium">
+                    <i class="fa-solid fa-user-shield text-violet-400"></i>
+                    <span>Personal Branding</span>
+                </button>
             </div>
         </div>
-    </div>
 
+        <div class="p-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+            <span>OmniAI v2.0 Pro</span>
+            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+        </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <main class="flex-1 flex flex-col h-full bg-geminiDark relative overflow-hidden">
+        
+        <!-- Top App Bar -->
+        <header class="h-16 flex items-center justify-between px-6 border-b border-slate-800/60">
+            <div class="flex items-center space-x-3">
+                <span class="text-lg font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Gemini OmniAI Studio</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center font-bold text-white text-sm shadow">
+                    AI
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <div id="workspace" class="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col items-center justify-between max-w-4xl w-full mx-auto">
+            
+            <!-- CHAT / DEFAULT GEMINI INTERFACE -->
+            <div id="view-chat" class="w-full flex-1 flex flex-col justify-center items-center text-center space-y-6">
+                <div id="welcome-banner" class="space-y-2">
+                    <h1 class="text-4xl md:text-5xl font-black tracking-tight bg-gradient-to-r from-blue-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">
+                        Hello, Creator
+                    </h1>
+                    <p class="text-slate-400 text-lg">How can I help you build, write, design, or automate today?</p>
+                </div>
+                
+                <div id="chat-messages" class="w-full space-y-4 text-left overflow-y-auto max-h-[50vh] hidden pr-2">
+                    <!-- Dynamic Messages will append here -->
+                </div>
+            </div>
+
+            <!-- MODULE VIEWS (Hidden by default, shown when selected from sidebar) -->
+            <div id="view-module" class="w-full hidden overflow-y-auto py-4 space-y-6">
+                <div id="module-container" class="bg-geminiCard p-6 rounded-3xl border border-slate-800 shadow-xl">
+                    <!-- Module contents injected dynamically -->
+                </div>
+            </div>
+
+            <!-- GOOGLE GEMINI STYLE BOTTOM SEARCH / PROMPT BAR -->
+            <div class="w-full pb-4 pt-2">
+                <div class="bg-geminiInput rounded-3xl p-3 border border-slate-700/60 shadow-2xl focus-within:border-blue-500 transition-all">
+                    <textarea id="main-input" rows="1" class="w-full bg-transparent text-white placeholder-slate-400 focus:outline-none resize-none px-3 text-sm md:text-base" placeholder="Enter a prompt, ask a question, or describe a task..."></textarea>
+                    
+                    <div class="flex items-center justify-between pt-2 px-2 border-t border-slate-700/30 mt-2">
+                        <!-- Left Media Upload Buttons -->
+                        <div class="flex items-center space-x-2 text-slate-400">
+                            <label class="cursor-pointer hover:text-white p-2 rounded-full hover:bg-geminiHover transition" title="Upload Photo">
+                                <i class="fa-regular fa-image text-lg"></i>
+                                <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(event, 'photo')">
+                            </label>
+                            <label class="cursor-pointer hover:text-white p-2 rounded-full hover:bg-geminiHover transition" title="Upload Video / Reel">
+                                <i class="fa-solid fa-video text-lg"></i>
+                                <input type="file" accept="video/*" class="hidden" onchange="handleFileUpload(event, 'video')">
+                            </label>
+                            <button onclick="triggerMic()" class="hover:text-white p-2 rounded-full hover:bg-geminiHover transition" title="Voice Input">
+                                <i class="fa-solid fa-microphone text-lg"></i>
+                            </button>
+                        </div>
+
+                        <!-- Right Send Button -->
+                        <button onclick="sendUserPrompt()" class="bg-white hover:bg-slate-200 text-slate-900 p-2.5 rounded-full w-10 h-10 flex items-center justify-center transition shadow">
+                            <i class="fa-solid fa-arrow-up text-sm font-bold"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-[11px] text-center text-slate-500 mt-2">Gemini may display inaccurate info. Verify important responses.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- JavaScript Controller Logic -->
     <script>
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        let currentModule = 'chat';
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('w-64');
+            sidebar.classList.toggle('w-20');
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+
+        function startNewChat() {
+            document.getElementById('welcome-banner').classList.remove('hidden');
+            document.getElementById('chat-messages').classList.add('hidden');
+            document.getElementById('chat-messages').innerHTML = '';
+            document.getElementById('view-chat').classList.remove('hidden');
+            document.getElementById('view-module').classList.add('hidden');
+            currentModule = 'chat';
+        }
+
+        function selectModule(mod) {
+            currentModule = mod;
+            document.getElementById('welcome-banner').classList.add('hidden');
+            document.getElementById('chat-messages').classList.add('hidden');
+            document.getElementById('view-chat').classList.add('hidden');
+            document.getElementById('view-module').classList.remove('hidden');
+
+            const container = document.getElementById('module-container');
+
+            if(mod === 'prompt') {
+                container.innerHTML = `
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="p-3 bg-purple-500/20 text-purple-400 rounded-xl"><i class="fa-solid fa-terminal text-lg"></i></div>
+                        <div><h2 class="text-xl font-bold">Prompt Engineering Studio</h2><p class="text-sm text-slate-400">Talk to AI the right way. Better Prompts = Better Results.</p></div>
+                    </div>
+                    <textarea id="raw-prompt" rows="3" class="w-full bg-geminiDark border border-slate-700 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-purple-500 mb-4" placeholder="Enter raw idea..."></textarea>
+                    <button onclick="runPromptOpt()" class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-semibold rounded-xl text-sm transition">Optimize Prompt</button>
+                    <div id="prompt-res" class="hidden mt-4 p-4 bg-geminiDark rounded-xl border border-purple-500/30 text-sm text-purple-200"></div>
+                `;
+            } else if(mod === 'content') {
+                container.innerHTML = `
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl"><i class="fa-solid fa-pen-nib text-lg"></i></div>
+                        <div><h2 class="text-xl font-bold">AI Content Generator</h2><p class="text-sm text-slate-400">Creating posts, blogs, and ads in minutes.</p></div>
+                    </div>
+                    <input type="text" id="c-topic" class="w-full bg-geminiDark border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-indigo-500 mb-4" placeholder="Enter Topic / Niche...">
+                    <button onclick="runContentGen()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-sm transition">Generate Content</button>
+                    <div id="c-res" class="hidden mt-4 p-4 bg-geminiDark rounded-xl border border-indigo-500/30 text-sm text-slate-300 whitespace-pre-line"></div>
+                `;
+            } else if(mod === 'video') {
+                container.innerHTML = `
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="p-3 bg-pink-500/20 text-pink-400 rounded-xl"><i class="fa-solid fa-video text-lg"></i></div>
+                        <div><h2 class="text-xl font-bold">AI Video & Reels Generator</h2><p class="text-sm text-slate-400">Reels & Shorts without cameras.</p></div>
+                    </div>
+                    <textarea id="v-script" rows="3" class="w-full bg-geminiDark border border-slate-700 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-pink-500 mb-4" placeholder="Describe your reel script or concept..."></textarea>
+                    <button onclick="runVideoGen()" class="px-6 py-3 bg-pink-600 hover:bg-pink-500 text-white font-semibold rounded-xl text-sm transition">Render AI Reel</button>
+                    <div id="v-res" class="hidden mt-4 p-4 bg-geminiDark rounded-xl border border-pink-500/30 text-center text-pink-300"><i class="fa-solid fa-circle-play text-3xl animate-pulse mb-2"></i><p>Synthesizing Reel Timeline...</p></div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="p-3 bg-blue-500/20 text-blue-400 rounded-xl"><i class="fa-solid fa-sparkles text-lg"></i></div>
+                        <div><h2 class="text-xl font-bold">${mod.toUpperCase()} Suite Active</h2><p class="text-sm text-slate-400">Automated intelligence tools ready for execution.</p></div>
+                    </div>
+                    <p class="text-sm text-slate-300">Use the bottom search bar to execute queries or ask Gemini assistance for ${mod}.</p>
+                `;
+            }
+        }
+
+        function sendUserPrompt() {
+            const input = document.getElementById('main-input');
+            const val = input.value.trim();
+            if(!val) return;
+
+            if(currentModule === 'chat') {
+                document.getElementById('welcome-banner').classList.add('hidden');
+                const chatBox = document.getElementById('chat-messages');
+                chatBox.classList.remove('hidden');
+                document.getElementById('view-chat').classList.remove('justify-center');
+
+                chatBox.innerHTML += `
+                    <div class="flex items-start space-x-3 bg-geminiCard p-4 rounded-2xl border border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs">You</div>
+                        <div class="text-sm text-slate-200 mt-1">${val}</div>
+                    </div>
+                    <div class="flex items-start space-x-3 bg-[#171819] p-4 rounded-2xl border border-slate-800">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-pink-500 flex items-center justify-center font-bold text-white text-xs"><i class="fa-solid fa-sparkles"></i></div>
+                        <div class="text-sm text-slate-300 mt-1">✨ Processing your request via Gemini OmniAI Engine regarding: "<strong>${val}</strong>". All systems (Video, Content, Marketing & Design) are aligned to assist you successfully.</div>
+                    </div>
+                `;
+                input.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } else {
+                alert('Query executed for module: ' + currentModule);
+                input.value = '';
+            }
+        }
+
+        function handleFileUpload(event, type) {
+            const file = event.target.files[0];
+            if(file) {
+                alert(`${type.toUpperCase()} uploaded successfully: ${file.name}. Gemini is analyzing visual properties.`);
+            }
+        }
+
+        function triggerMic() {
+            alert('Listening... Speak your voice prompt into the microphone.');
+        }
+
+        function runPromptOpt() {
+            const text = document.getElementById('raw-prompt').value;
+            const res = document.getElementById('prompt-res');
+            if(!text) return;
+            res.classList.remove('hidden');
+            res.innerHTML = `<strong>✨ Optimized Gemini Prompt:</strong><br>"Act as an expert. Provide an in-depth structured framework for: <em>${text}</em> with maximum precision."`;
+        }
+
+        function runContentGen() {
+            const top = document.getElementById('c-topic').value;
+            const res = document.getElementById('c-res');
+            if(!top) return;
+            res.classList.remove('hidden');
+            res.innerHTML = `🚀 <strong>Generated Post for "${top}":</strong>\n\nDiscover the next evolution of ${top}! Stay ahead of the curve with automated AI workflows.\n\n#${top.replace(/\s+/g, '')} #Innovation`;
+        }
+
+        function runVideoGen() {
+            const script = document.getElementById('v-script').value;
+            const res = document.getElementById('v-res');
+            if(!script) return;
+            res.classList.remove('hidden');
+            setTimeout(() => {
+                res.innerHTML = `<i class="fa-solid fa-circle-check text-3xl text-emerald-400 mb-2"></i><p class="font-semibold text-white">AI Reel Exported Successfully!</p>`;
+            }, 2000);
+        }
     </script>
 </body>
 </html>
-
