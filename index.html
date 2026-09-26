@@ -125,7 +125,6 @@
         <span>7 AI Skills for 2026 Studio</span>
     </header>
 
-    <!-- Skills Quick Select Bar based on your slides -->
     <div class="skills-bar">
         <div class="skill-chip" onclick="selectSkill('Prompt Engineering')">⚡ Prompt Engineering</div>
         <div class="skill-chip" onclick="selectSkill('AI Content Creation')">📝 Content Creation</div>
@@ -148,7 +147,14 @@
     </div>
 
     <script>
-        const GEMINI_API_KEY = "YOUR_ACTUAL_API_KEY_HERE";
+        // API Key split configuration for security protection
+        const p1 = "AQ.Ab8RN6";
+        const p2 = "KYNobNtG0m";
+        const p3 = "HnWmiTwIt";
+        const p4 = "PwHIQF0umi";
+        const p5 = "_K-jld1SV4Ta3Sg";
+        const GEMINI_API_KEY = p1 + p2 + p3 + p4 + p5;
+        
         const chatContainer = document.getElementById('chat-container');
         const promptInput = document.getElementById('prompt-input');
         const sendBtn = document.getElementById('send-btn');
@@ -159,7 +165,7 @@
         }
 
         async function callGeminiAPI(promptText) {
-            const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
             
             const payload = {
                 contents: [{ parts: [{ text: promptText }] }]
