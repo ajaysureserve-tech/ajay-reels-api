@@ -67,31 +67,31 @@
                     </button>
                     <button onclick="selectModule('prompt'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-terminal text-purple-600 w-5"></i>
-                        <span>1. Prompt Engineering[span_0](start_span)[span_0](end_span)</span>
+                        <span>1. Prompt Engineering</span>
                     </button>
                     <button onclick="selectModule('content'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-pen-nib text-indigo-600 w-5"></i>
-                        <span>2. AI Content Creation[span_1](start_span)[span_1](end_span)</span>
+                        <span>2. AI Content Creation</span>
                     </button>
                     <button onclick="selectModule('video'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-video text-pink-600 w-5"></i>
-                        <span>3. AI Video Creation[span_2](start_span)[span_2](end_span)</span>
+                        <span>3. AI Video Creation</span>
                     </button>
                     <button onclick="selectModule('marketing'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-bullhorn text-amber-600 w-5"></i>
-                        <span>4. AI Marketing Automation[span_3](start_span)[span_3](end_span)</span>
+                        <span>4. AI Marketing Automation</span>
                     </button>
                     <button onclick="selectModule('design'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-wand-magic-sparkles text-cyan-600 w-5"></i>
-                        <span>5. AI Design & Creativity[span_4](start_span)[span_4](end_span)</span>
+                        <span>5. AI Design & Creativity</span>
                     </button>
                     <button onclick="selectModule('data'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-chart-pie text-emerald-600 w-5"></i>
-                        <span>6. AI Data & Decisions[span_5](start_span)[span_5](end_span)</span>
+                        <span>6. AI Data & Decisions</span>
                     </button>
                     <button onclick="selectModule('branding'); toggleSidebar();" class="mod-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-100 text-slate-700 text-sm font-medium transition">
                         <i class="fa-solid fa-user-shield text-violet-600 w-5"></i>
-                        <span>7. AI Personal Branding[span_6](start_span)[span_6](end_span)</span>
+                        <span>7. AI Personal Branding</span>
                     </button>
                 </div>
             </div>
@@ -191,13 +191,13 @@
             const container = document.getElementById('module-container');
 
             const moduleTitles = {
-                'prompt': { icon: 'fa-terminal', color: 'purple', title: '1. Prompt Engineering', desc: 'Talking to AI the right way. Better Prompts = Better Results[span_7](start_span)[span_7](end_span).', tools: 'Recommended Tools: ChatGPT, Claude, Gemini[span_8](start_span)[span_8](end_span)' },
-                'content': { icon: 'fa-pen-nib', color: 'indigo', title: '2. AI Content Creation', desc: 'Creating posts, blogs, and ads in minutes. Content Speed = Attention[span_9](start_span)[span_9](end_span).', tools: 'Recommended Tools: Jasper, Copy.ai, Notion AI[span_10](start_span)[span_10](end_span)' },
-                'video': { icon: 'fa-video', color: 'pink', title: '3. AI Video Creation', desc: 'Reels & Shorts without cameras. Video dominates all platforms[span_11](start_span)[span_11](end_span).', tools: 'Recommended Tools: Pictory, Runway, InVideo AI[span_12](start_span)[span_12](end_span)' },
-                'marketing': { icon: 'fa-bullhorn', color: 'amber', title: '4. AI Marketing Automation', desc: 'Automating emails, ads & follow-ups. Scale without burnout[span_13](start_span)[span_13](end_span).', tools: 'Recommended Tools: HubSpot AI, Zapier, ActiveCampaign[span_14](start_span)[span_14](end_span)' },
-                'design': { icon: 'fa-wand-magic-sparkles', color: 'cyan', title: '5. AI Design & Creativity', desc: 'Visuals without designing skills. Scroll-stopping creatives sell[span_15](start_span)[span_15](end_span).', tools: 'Recommended Tools: Canva, Midjourney, Adobe Firefly[span_16](start_span)[span_16](end_span)' },
-                'data': { icon: 'fa-chart-pie', color: 'emerald', title: '6. AI Data & Decision Making', desc: 'Using AI insights to make smart moves. Data-driven beats gut feeling[span_17](start_span)[span_17](end_span).', tools: 'Recommended Tools: Google Analytics AI, Power BI, Tableau[span_18](start_span)[span_18](end_span)' },
-                'branding': { icon: 'fa-user-shield', color: 'violet', title: '7. AI Personal Branding', desc: 'Growing authority using AI. Personal brands win in 2026[span_19](start_span)[span_19](end_span).', tools: 'Recommended Tools: Tapilo, Hootsuite AI, Shield Analytics[span_20](start_span)[span_20](end_span)' }
+                'prompt': { icon: 'fa-terminal', color: 'purple', title: '1. Prompt Engineering', desc: 'Talking to AI the right way. Better Prompts = Better Results.', tools: 'Recommended Tools: ChatGPT, Claude, Gemini' },
+                'content': { icon: 'fa-pen-nib', color: 'indigo', title: '2. AI Content Creation', desc: 'Creating posts, blogs, and ads in minutes. Content Speed = Attention.', tools: 'Recommended Tools: Jasper, Copy.ai, Notion AI' },
+                'video': { icon: 'fa-video', color: 'pink', title: '3. AI Video Creation', desc: 'Reels & Shorts without cameras. Video dominates all platforms.', tools: 'Recommended Tools: Pictory, Runway, InVideo AI' },
+                'marketing': { icon: 'fa-bullhorn', color: 'amber', title: '4. AI Marketing Automation', desc: 'Automating emails, ads & follow-ups. Scale without burnout.', tools: 'Recommended Tools: HubSpot AI, Zapier, ActiveCampaign' },
+                'design': { icon: 'fa-wand-magic-sparkles', color: 'cyan', title: '5. AI Design & Creativity', desc: 'Visuals without designing skills. Scroll-stopping creatives sell.', tools: 'Recommended Tools: Canva, Midjourney, Adobe Firefly' },
+                'data': { icon: 'fa-chart-pie', color: 'emerald', title: '6. AI Data & Decision Making', desc: 'Using AI insights to make smart moves. Data-driven beats gut feeling.', tools: 'Recommended Tools: Google Analytics AI, Power BI, Tableau' },
+                'branding': { icon: 'fa-user-shield', color: 'violet', title: '7. AI Personal Branding', desc: 'Growing authority using AI. Personal brands win in 2026.', tools: 'Recommended Tools: Tapilo, Hootsuite AI, Shield Analytics' }
             };
 
             const info = moduleTitles[mod] || { icon: 'fa-microchip', color: 'orange', title: 'AuraAI Suite', desc: 'Advanced AI intelligence module.', tools: '' };
@@ -231,6 +231,7 @@
 
         async function callAIEngine(promptText) {
             try {
+                // Fixed stable endpoint URL for Gemini 1.5 Flash
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
