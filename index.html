@@ -3,71 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini Studio</title>
+    <title>Gemini Studio - Live Voice Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .bg-gradient-blue-white {
-            background: linear-gradient(135deg, #f0f4f9 0%, #ffffff 100%);
+        .bg-gradient-pink-white {
+            background: linear-gradient(135deg, #fff5f7 0%, #fff1f4 50%, #ffffff 100%);
         }
         ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #fbcfe8; border-radius: 10px; }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); }
+        }
+        .live-glow { animation: pulse-glow 2s infinite ease-in-out; }
     </style>
 </head>
-<body class="bg-gradient-blue-white text-slate-800 font-sans h-screen flex flex-col justify-between overflow-hidden relative">
+<body class="bg-gradient-pink-white text-slate-800 font-sans h-screen flex flex-col justify-between overflow-hidden relative">
 
-    <!-- Sidebar Drawer (Gemini Exact Menu Style) -->
-    <div id="sidebar" class="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between border-r border-slate-200">
+    <!-- Sidebar Drawer -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between border-r border-pink-100">
         <div class="p-4 flex flex-col h-full justify-between">
-            <!-- Top Options -->
             <div class="space-y-1 overflow-y-auto flex-1 pr-1">
                 <div class="flex items-center justify-between pb-3 mb-2">
-                    <span class="font-bold text-slate-900 text-lg">Gemini</span>
-                    <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition">
+                    <span class="font-bold text-slate-900 text-lg">Gemini Studio</span>
+                    <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-pink-50 text-slate-600 transition">
                         <i class="fa-solid fa-xmark text-lg"></i>
                     </button>
                 </div>
 
-                <button onclick="newChat()" class="w-full flex items-center space-x-3 px-4 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-sm font-medium text-slate-800 transition mb-3">
-                    <i class="fa-solid fa-plus text-slate-600"></i>
+                <button onclick="newChat()" class="w-full flex items-center space-x-3 px-4 py-3 rounded-full bg-pink-50 hover:bg-pink-100 text-sm font-medium text-pink-700 transition mb-3 border border-pink-200">
+                    <i class="fa-solid fa-plus text-pink-600"></i>
                     <span>New chat</span>
                 </button>
 
                 <div class="space-y-1 text-sm font-medium text-slate-700">
-                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-magnifying-glass w-5 text-slate-500"></i><span>Search chats</span></a>
-                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-graduation-cap w-5 text-slate-500"></i><span>Students</span></a>
-                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-regular fa-image w-5 text-slate-500"></i><span>Images</span></a>
-                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-video w-5 text-slate-500"></i><span>Videos</span></a>
-                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-table-cells-large w-5 text-slate-500"></i><span>Library</span></a>
+                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-pink-50 transition"><i class="fa-solid fa-magnifying-glass w-5 text-pink-500"></i><span>Search chats</span></a>
+                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-pink-50 transition"><i class="fa-solid fa-graduation-cap w-5 text-pink-500"></i><span>Students</span></a>
+                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-pink-50 transition"><i class="fa-regular fa-image w-5 text-pink-500"></i><span>Images</span></a>
+                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-pink-50 transition"><i class="fa-solid fa-video w-5 text-pink-500"></i><span>Videos</span></a>
+                    <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-pink-50 transition"><i class="fa-solid fa-table-cells-large w-5 text-pink-500"></i><span>Library</span></a>
                 </div>
 
-                <div class="pt-4 pb-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Notebooks</div>
-                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 text-sm font-medium text-slate-700 transition">
-                    <i class="fa-solid fa-plus text-slate-500"></i>
-                    <span>New notebook</span>
-                </a>
-
-                <div class="pt-4 pb-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Recent</div>
-                <div class="space-y-1 text-sm text-slate-600">
-                    <div class="px-3 py-2 rounded-xl hover:bg-slate-100 truncate cursor-pointer">All-in-One AI Web Application Design</div>
-                    <div class="px-3 py-2 rounded-xl hover:bg-slate-100 truncate cursor-pointer">MP SI pariksha 2026 tithiyan</div>
-                    <div class="px-3 py-2 rounded-xl hover:bg-slate-100 truncate cursor-pointer">Romantic Double-Exposure Wedding Album</div>
-                    <div class="px-3 py-2 rounded-xl hover:bg-slate-100 truncate cursor-pointer">iPhone Par App Clone Kaise Karein</div>
+                <div class="pt-4 pb-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Recent Chats</div>
+                <div id="recent-chats-list" class="space-y-1 text-sm text-slate-600">
+                    <div class="px-3 py-2 rounded-xl text-slate-400 text-xs italic">No recent chats yet</div>
                 </div>
             </div>
 
-            <!-- Bottom Profile & Upgrade Bar -->
-            <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <div onclick="openAccountModal()" class="flex items-center space-x-3 cursor-pointer hover:bg-slate-100 p-2 rounded-xl transition flex-1">
-                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 text-white font-bold flex items-center justify-center text-xs overflow-hidden">
-                        <img id="sidebar-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-full h-full object-cover" alt="User">
+            <!-- Bottom Profile Bar -->
+            <div class="pt-3 border-t border-pink-100 flex items-center justify-between">
+                <div onclick="openAccountModal()" class="flex items-center space-x-3 cursor-pointer hover:bg-pink-50 p-2 rounded-xl transition flex-1">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 text-white font-bold flex items-center justify-center text-xs overflow-hidden shadow-sm">
+                        <span id="sidebar-avatar-initial">U</span>
                     </div>
                     <div class="truncate">
-                        <div id="sidebar-username" class="text-xs font-semibold text-slate-800 truncate">Ajayraj Sureserve</div>
-                        <div class="text-[10px] text-slate-500 truncate">ajay.sureserve@gmail.com</div>
+                        <div id="sidebar-username" class="text-xs font-semibold text-slate-800 truncate">Guest User</div>
+                        <div id="sidebar-email" class="text-[10px] text-slate-500 truncate">Tap to sign in</div>
                     </div>
                 </div>
-                <button onclick="openAccountModal()" class="p-2 text-slate-600 hover:bg-slate-100 rounded-full transition">
+                <button onclick="openAccountModal()" class="p-2 text-slate-600 hover:bg-pink-50 rounded-full transition">
                     <i class="fa-solid fa-gear"></i>
                 </button>
             </div>
@@ -77,56 +72,92 @@
     <!-- Backdrop -->
     <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/20 z-40 hidden backdrop-blur-xs transition-opacity"></div>
 
-    <!-- Account / Settings Modal (Image 10 Style) -->
+    <!-- Gemini Live Voice Mode Overlay (Image 12 Style) -->
+    <div id="live-voice-overlay" class="fixed inset-0 bg-gradient-to-b from-white/95 via-pink-50/90 to-blue-50/95 z-50 hidden flex flex-col justify-between p-6 backdrop-blur-md">
+        <!-- Top Header inside Live Mode -->
+        <div class="flex items-center justify-between">
+            <button onclick="closeLiveVoice()" class="p-2 rounded-full hover:bg-pink-100/50 text-slate-700 transition">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+            <div class="flex items-center space-x-2 bg-white/80 border border-pink-200 px-3 py-1.5 rounded-full shadow-xs">
+                <span class="text-xs font-semibold text-slate-700">Voice Tone:</span>
+                <select id="voice-selector" class="text-xs bg-transparent text-pink-600 font-bold focus:outline-none cursor-pointer">
+                    <!-- Populated dynamically via JS -->
+                </select>
+            </div>
+            <div onclick="openAccountModal()" class="w-9 h-9 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 text-white font-bold flex items-center justify-center text-xs cursor-pointer shadow-sm" id="live-avatar">
+                U
+            </div>
+        </div>
+
+        <!-- Center Glowing Wave Animation -->
+        <div class="flex flex-col items-center justify-center space-y-6 my-auto">
+            <div id="live-sphere" class="w-36 h-36 rounded-full bg-gradient-to-tr from-pink-500 via-rose-400 to-blue-400 live-glow shadow-2xl flex items-center justify-center text-white text-3xl">
+                <i class="fa-solid fa-microphone-lines animate-pulse"></i>
+            </div>
+            <div id="live-status-text" class="text-sm font-semibold text-slate-600 tracking-wide">Listening to you (Indian Accent)...</div>
+        </div>
+
+        <!-- Bottom Controls (Image 12 Exact Layout) -->
+        <div class="flex items-center justify-center space-x-4 pb-4">
+            <button onclick="alert('Camera / Video mode in Live')" class="w-12 h-12 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-slate-700 hover:bg-pink-50 transition">
+                <i class="fa-solid fa-video text-base"></i>
+            </button>
+            <button onclick="alert('Upload file in Live')" class="w-12 h-12 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-slate-700 hover:bg-pink-50 transition">
+                <i class="fa-solid fa-arrow-up-from-bracket text-base"></i>
+            </button>
+            <div class="h-16 w-28 bg-white/80 border border-pink-200 rounded-full shadow-md flex items-center justify-center px-4">
+                <div class="flex space-x-1 items-center">
+                    <span class="w-1 h-4 bg-pink-500 animate-bounce"></span>
+                    <span class="w-1 h-8 bg-rose-500 animate-bounce delay-100"></span>
+                    <span class="w-1 h-6 bg-blue-500 animate-bounce delay-200"></span>
+                    <span class="w-1 h-3 bg-pink-400 animate-bounce delay-300"></span>
+                </div>
+            </div>
+            <button onclick="toggleLiveVoice()" class="w-12 h-12 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-slate-700 hover:bg-pink-50 transition" title="Mute Mic">
+                <i class="fa-solid fa-microphone text-base text-pink-600"></i>
+            </button>
+            <button onclick="closeLiveVoice()" class="w-12 h-12 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-slate-700 hover:bg-red-50 hover:text-red-600 transition" title="End Live">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Account Modal -->
     <div id="account-modal" class="fixed inset-0 bg-black/40 z-50 hidden flex items-center justify-center p-4 backdrop-blur-xs">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative animate-in fade-in zoom-in duration-200">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative border border-pink-100">
             <div class="flex justify-end">
-                <button onclick="closeAccountModal()" class="text-slate-500 hover:text-slate-800 font-bold text-sm bg-slate-100 px-4 py-1.5 rounded-full">Done</button>
+                <button onclick="closeAccountModal()" class="text-slate-500 hover:text-slate-800 font-bold text-sm bg-pink-50 px-4 py-1.5 rounded-full border border-pink-200">Done</button>
             </div>
             
-            <!-- User Info Card -->
-            <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+            <div class="flex items-center justify-between p-3 bg-pink-50/50 border border-pink-100 rounded-2xl">
                 <div class="flex items-center space-x-3">
-                    <div class="relative">
-                        <img id="modal-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-12 h-12 rounded-full object-cover border" alt="Profile">
-                        <button onclick="changeProfilePic()" class="absolute -bottom-1 -right-1 bg-white p-1 rounded-full shadow border text-xs text-blue-600"><i class="fa-solid fa-pen"></i></button>
-                    </div>
+                    <div class="w-12 h-12 rounded-full bg-pink-600 text-white flex items-center justify-center font-bold text-lg shadow-sm" id="modal-avatar-initial">U</div>
                     <div>
-                        <input type="text" id="edit-name" value="Ajayraj Sureserve" class="font-bold text-slate-900 text-sm bg-transparent border-b border-transparent hover:border-slate-300 focus:border-blue-500 focus:outline-none">
-                        <div class="text-xs text-slate-500">ajay.sureserve@gmail.com</div>
+                        <input type="text" id="edit-name" placeholder="Enter your name" class="font-bold text-slate-900 text-sm bg-transparent border-b border-pink-300 focus:border-pink-600 focus:outline-none">
+                        <div class="text-xs text-slate-500" id="modal-email">user@gmail.com</div>
                     </div>
                 </div>
-                <button onclick="updateProfileName()" class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-xl font-medium">Save</button>
+                <button onclick="saveUserProfile()" class="text-xs bg-pink-600 hover:bg-pink-700 text-white px-3 py-1.5 rounded-xl font-medium shadow-sm">Save</button>
             </div>
 
-            <!-- Options -->
             <div class="space-y-2">
-                <a href="https://myaccount.google.com/" target="_blank" class="flex items-center space-x-3 p-3.5 rounded-2xl hover:bg-slate-50 border border-slate-100 font-medium text-sm text-slate-800 transition">
+                <a href="#" class="flex items-center space-x-3 p-3.5 rounded-2xl hover:bg-pink-50 border border-pink-100 font-medium text-sm text-slate-800 transition">
                     <i class="fa-brands fa-google text-blue-500 text-lg w-6"></i>
                     <span>Manage your Google Account</span>
                 </a>
-                <a href="#" onclick="alert('You are already on Google AI Plus / Flash tier!')" class="flex items-center space-x-3 p-3.5 rounded-2xl hover:bg-slate-50 border border-slate-100 font-medium text-sm text-slate-800 transition">
-                    <i class="fa-solid fa-wand-magic-sparkles text-amber-500 text-lg w-6"></i>
+                <a href="#" class="flex items-center space-x-3 p-3.5 rounded-2xl hover:bg-pink-50 border border-pink-100 font-medium text-sm text-slate-800 transition">
+                    <i class="fa-solid fa-wand-magic-sparkles text-pink-600 text-lg w-6"></i>
                     <span>Upgrade to Google AI Plus</span>
                 </a>
-                <a href="#" onclick="alert('Settings: Theme is set to Light Dynamic')" class="flex items-center space-x-3 p-3.5 rounded-2xl hover:bg-slate-50 border border-slate-100 font-medium text-sm text-slate-800 transition">
-                    <i class="fa-solid fa-gear text-slate-600 text-lg w-6"></i>
-                    <span>Settings & Preferences</span>
-                </a>
-            </div>
-
-            <div class="pt-4 border-t border-slate-100 flex justify-center space-x-4 text-xs text-slate-400">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <span>•</span>
-                <a href="#" class="hover:underline">Terms of Service</a>
             </div>
         </div>
     </div>
 
-    <!-- Top Navigation Header -->
-    <header class="flex items-center justify-between px-4 py-3 bg-white/70 backdrop-blur-md border-b border-slate-200 shrink-0">
+    <!-- Header -->
+    <header class="flex items-center justify-between px-4 py-3 bg-white/70 backdrop-blur-md border-b border-pink-100 shrink-0">
         <div class="flex items-center space-x-3">
-            <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-slate-100 text-slate-700 transition">
+            <button onclick="toggleSidebar()" class="p-2 rounded-full hover:bg-pink-50 text-slate-700 transition">
                 <i class="fa-solid fa-bars text-lg"></i>
             </button>
             <div class="flex items-center space-x-2 font-semibold text-slate-900 text-base cursor-pointer">
@@ -136,45 +167,45 @@
         </div>
 
         <div class="flex items-center space-x-3">
-            <button class="p-2.5 rounded-full hover:bg-slate-100 text-slate-700 transition border border-slate-200" title="Tools">
-                <i class="fa-solid fa-wand-magic-sparkles text-blue-600"></i>
+            <button onclick="openLiveVoice()" class="p-2.5 rounded-full hover:bg-pink-50 text-slate-700 transition border border-pink-100" title="Gemini Live Voice Mode">
+                <i class="fa-solid fa-waveform text-pink-600"></i>
             </button>
-            <div onclick="openAccountModal()" class="w-9 h-9 rounded-full overflow-hidden border border-slate-300 cursor-pointer shadow-xs">
-                <img id="header-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-full h-full object-cover" alt="Profile">
+            <div onclick="openAccountModal()" id="header-avatar" class="w-9 h-9 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 text-white font-bold flex items-center justify-center text-xs cursor-pointer shadow-sm">
+                U
             </div>
         </div>
     </header>
 
-    <!-- Chat / Content Container -->
+    <!-- Chat Container -->
     <div id="chat-container" class="flex-1 overflow-y-auto p-4 space-y-4 max-w-2xl w-full mx-auto my-auto">
-        <div class="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm text-sm text-slate-700">
-            Hello! Ask anything or select an option from the menu. You can also upload photos to analyze or edit them.
+        <div class="p-4 bg-white/80 border border-pink-100 rounded-2xl shadow-sm text-sm text-slate-700">
+            Hello! Type your prompt, upload a photo, or tap the Live waveform button to talk with Indian robotic voices.
         </div>
     </div>
 
-    <!-- Image Preview Area -->
+    <!-- Image Preview -->
     <div id="image-preview-container" class="max-w-2xl mx-auto px-4 hidden">
-        <div class="relative inline-block bg-white p-2 rounded-xl border border-slate-200 shadow-md">
+        <div class="relative inline-block bg-white p-2 rounded-xl border border-pink-200 shadow-md">
             <img id="preview-img" src="" class="h-20 w-20 object-cover rounded-lg">
-            <button onclick="removeImage()" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="removeImage()" class="absolute -top-2 -right-2 bg-pink-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"><i class="fa-solid fa-xmark"></i></button>
         </div>
     </div>
 
-    <!-- Floating Bottom Input Area -->
+    <!-- Bottom Input Area -->
     <div class="p-4 bg-gradient-to-t from-white via-white/80 to-transparent shrink-0">
-        <div class="max-w-2xl mx-auto bg-white border border-slate-300 rounded-full px-4 py-3 shadow-lg flex items-center space-x-3 focus-within:border-blue-500 transition">
-            <!-- File Upload Input (Hidden) -->
+        <div class="max-w-2xl mx-auto bg-white border border-pink-200 rounded-full px-4 py-3 shadow-lg flex items-center space-x-3 focus-within:border-pink-500 transition">
             <input type="file" id="image-input" accept="image/*" class="hidden" onchange="handleImageSelect(event)">
-            <button onclick="document.getElementById('image-input').click()" class="text-slate-400 hover:text-blue-600 transition p-1" title="Upload Photo">
+            <button onclick="document.getElementById('image-input').click()" class="text-slate-400 hover:text-pink-600 transition p-1">
                 <i class="fa-solid fa-plus text-base"></i>
             </button>
             
-            <input type="text" id="prompt-input" class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm focus:outline-none font-medium" placeholder="Ask Gemini">
+            <input type="text" id="prompt-input" class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm focus:outline-none font-medium" placeholder="Ask Gemini...">
             
-            <button id="mic-btn" onclick="toggleSpeechRecognition()" class="text-slate-400 hover:text-blue-600 transition p-1" title="Voice Input">
+            <!-- Mic button triggers Live Voice Mode -->
+            <button onclick="openLiveVoice()" class="text-slate-400 hover:text-pink-600 transition p-1" title="Gemini Live">
                 <i class="fa-solid fa-microphone text-base" id="mic-icon"></i>
             </button>
-            <button id="send-btn" onclick="handleUserSubmit()" class="bg-blue-600 hover:bg-blue-700 text-white w-9 h-9 rounded-full flex items-center justify-center transition shadow-md">
+            <button id="send-btn" onclick="handleUserSubmit()" class="bg-pink-600 hover:bg-pink-700 text-white w-9 h-9 rounded-full flex items-center justify-center transition shadow-md">
                 <i class="fa-solid fa-arrow-up text-xs"></i>
             </button>
         </div>
@@ -194,50 +225,162 @@
         const sidebar = document.getElementById('sidebar');
         const sidebarBackdrop = document.getElementById('sidebar-backdrop');
         const accountModal = document.getElementById('account-modal');
+        const liveVoiceOverlay = document.getElementById('live-voice-overlay');
         
         let selectedBase64Image = null;
+        let synth = window.speechSynthesis;
+        let voices = [];
+
+        window.onload = function() {
+            let savedName = localStorage.getItem('gemini_username');
+            if (savedName) updateUIProfile(savedName);
+            loadRecentChats();
+            loadVoices();
+            if (synth.onvoiceschanged !== undefined) {
+                synth.onvoiceschanged = loadVoices;
+            }
+        };
+
+        function loadVoices() {
+            voices = synth.getVoices();
+            const voiceSelector = document.getElementById('voice-selector');
+            voiceSelector.innerHTML = '';
+            
+            // Filter Indian or English voices for girl/boy robotic tones
+            voices.forEach((voice, index) => {
+                if (voice.lang.includes('IN') || voice.lang.includes('en') || voice.name.includes('Google') || voice.name.includes('Natural')) {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    voiceSelector.appendChild(option);
+                }
+            });
+            if(voiceSelector.options.length === 0) {
+                const option = document.createElement('option');
+                option.textContent = "Default Robotic Voice";
+                voiceSelector.appendChild(option);
+            }
+        }
+
+        function speakText(text) {
+            if (!synth) return;
+            synth.cancel(); // Stop previous speech
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voiceSelector = document.getElementById('voice-selector');
+            const selectedIdx = voiceSelector.value;
+            if (voices[selectedIdx]) {
+                utterance.voice = voices[selectedIdx];
+            }
+            utterance.rate = 1.0; // Normal speed
+            utterance.pitch = 1.1; // Slightly robotic / bright tone
+            synth.speak(utterance);
+        }
+
+        function openLiveVoice() {
+            liveVoiceOverlay.classList.remove('hidden');
+            startLiveSpeechRecognition();
+        }
+
+        function closeLiveVoice() {
+            liveVoiceOverlay.classList.add('hidden');
+            if (synth) synth.cancel();
+        }
+
+        function startLiveSpeechRecognition() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert("Speech recognition not supported in this browser.");
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'hi-IN'; // Indian Language / Accent support
+            
+            document.getElementById('live-status-text').innerText = "Listening in Indian language/accent...";
+
+            recognition.onresult = async function(event) {
+                const spokenText = event.results[0][0].transcript;
+                document.getElementById('live-status-text').innerText = `You said: "${spokenText}"`;
+                
+                // Call API and Speak out response in robotic tone
+                const aiResponse = await callGeminiAPI(spokenText);
+                document.getElementById('live-status-text').innerText = aiResponse.substring(0, 80) + "...";
+                speakText(aiResponse);
+            };
+
+            recognition.onerror = function() {
+                document.getElementById('live-status-text').innerText = "Listening error. Tap mic to retry.";
+            };
+
+            recognition.start();
+        }
+
+        function updateUIProfile(name) {
+            const initial = name.charAt(0).toUpperCase();
+            document.getElementById('sidebar-username').innerText = name;
+            document.getElementById('sidebar-email').innerText = `${name.toLowerCase().replace(/\s+/g, '')}@gmail.com`;
+            document.getElementById('sidebar-avatar-initial').innerText = initial;
+            document.getElementById('header-avatar').innerText = initial;
+            document.getElementById('live-avatar').innerText = initial;
+            document.getElementById('modal-avatar-initial').innerText = initial;
+            document.getElementById('edit-name').value = name;
+        }
+
+        function saveUserProfile() {
+            const name = document.getElementById('edit-name').value.trim();
+            if (name) {
+                localStorage.setItem('gemini_username', name);
+                updateUIProfile(name);
+                closeAccountModal();
+            }
+        }
 
         function toggleSidebar() {
             sidebar.classList.toggle('-translate-x-full');
             sidebarBackdrop.classList.toggle('hidden');
         }
 
-        function openAccountModal() {
-            accountModal.classList.remove('hidden');
-        }
-
-        function closeAccountModal() {
-            accountModal.classList.add('hidden');
-        }
-
-        function updateProfileName() {
-            const name = document.getElementById('edit-name').value;
-            if(name) {
-                document.getElementById('sidebar-username').innerText = name;
-                alert("Profile updated successfully!");
-                closeAccountModal();
-            }
-        }
-
-        function changeProfilePic() {
-            let url = prompt("Enter new profile image URL:");
-            if(url) {
-                document.getElementById('header-avatar').src = url;
-                document.getElementById('sidebar-avatar').src = url;
-                document.getElementById('modal-avatar').src = url;
-            }
-        }
+        function openAccountModal() { accountModal.classList.remove('hidden'); }
+        function closeAccountModal() { accountModal.classList.add('hidden'); }
 
         function newChat() {
             chatContainer.innerHTML = `
-                <div class="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm text-sm text-slate-700">
+                <div class="p-4 bg-white/80 border border-pink-100 rounded-2xl shadow-sm text-sm text-slate-700">
                     New chat started. How can I help you today?
                 </div>
             `;
             toggleSidebar();
         }
 
-        // Image Selection Handler for Photo Editing / Analysis
+        function saveToRecent(text) {
+            let recent = JSON.parse(localStorage.getItem('gemini_recent_pink') || '[]');
+            if (!recent.includes(text)) {
+                recent.unshift(text);
+                if (recent.length > 5) recent.pop();
+                localStorage.setItem('gemini_recent_pink', JSON.stringify(recent));
+                loadRecentChats();
+            }
+        }
+
+        function loadRecentChats() {
+            let recent = JSON.parse(localStorage.getItem('gemini_recent_pink') || '[]');
+            const list = document.getElementById('recent-chats-list');
+            if (recent.length === 0) {
+                list.innerHTML = `<div class="px-3 py-2 rounded-xl text-slate-400 text-xs italic">No recent chats yet</div>`;
+                return;
+            }
+            list.innerHTML = '';
+            recent.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'px-3 py-2 rounded-xl hover:bg-pink-50 truncate cursor-pointer text-slate-600';
+                div.innerText = item;
+                div.onclick = () => {
+                    promptInput.value = item;
+                    toggleSidebar();
+                };
+                list.appendChild(div);
+            });
+        }
+
         function handleImageSelect(event) {
             const file = event.target.files[0];
             if (file) {
@@ -257,71 +400,26 @@
             document.getElementById('image-preview-container').classList.add('hidden');
         }
 
-        // Speech Recognition (Mic) Working Like Gemini
-        let recognition;
-        function toggleSpeechRecognition() {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                alert("Speech recognition is not supported in this browser.");
-                return;
-            }
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            recognition.lang = 'en-US';
-            
-            const micIcon = document.getElementById('mic-icon');
-            micIcon.classList.add('text-red-500', 'fa-bounce');
-
-            recognition.onresult = function(event) {
-                promptInput.value = event.results[0][0].transcript;
-                micIcon.classList.remove('text-red-500', 'fa-bounce');
-            };
-
-            recognition.onerror = function() {
-                micIcon.classList.remove('text-red-500', 'fa-bounce');
-            };
-
-            recognition.onend = function() {
-                micIcon.classList.remove('text-red-500', 'fa-bounce');
-            };
-
-            recognition.start();
-        }
-
         async function callGeminiAPI(promptText, base64Img = null) {
             const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
-            
             let parts = [{ text: promptText }];
             if (base64Img) {
-                // Extract base64 content
                 const base64Data = base64Img.split(',')[1];
                 const mimeType = base64Img.substring(base64Img.indexOf(':') + 1, base64Img.indexOf(';'));
-                parts.push({
-                    inline_data: {
-                        mime_type: mimeType,
-                        data: base64Data
-                    }
-                });
+                parts.push({ inline_data: { mime_type: mimeType, data: base64Data } });
             }
-
-            const payload = { contents: [{ parts: parts }] };
 
             try {
                 const response = await fetch(endpoint, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'X-goog-api-key': API_KEY
-                    },
-                    body: JSON.stringify(payload)
+                    headers: { 'Content-Type': 'application/json', 'X-goog-api-key': API_KEY },
+                    body: JSON.stringify({ contents: [{ parts: parts }] })
                 });
-
                 const data = await response.json();
                 if (data.candidates && data.candidates.length > 0) {
                     return data.candidates[0].content.parts[0].text;
-                } else if (data.error) {
-                    return `API Error: ${data.error.message}`;
                 } else {
-                    return "No response received.";
+                    return data.error?.message || "No response received.";
                 }
             } catch (err) {
                 return `Network Error: ${err.message}`;
@@ -332,33 +430,34 @@
             const text = promptInput.value.trim();
             if (!text && !selectedBase64Image) return;
 
+            saveToRecent(text || "Image Analysis");
+
             let userMsg = text || "Analyze this image";
             if (selectedBase64Image) {
                 userMsg = `<div class='mb-2'><img src='${selectedBase64Image}' class='max-h-40 rounded-lg'></div>` + userMsg;
             }
 
-            appendMessage(userMsg, 'bg-blue-50 border-blue-100 text-slate-900 ml-auto', true);
+            appendMessage(userMsg, 'bg-pink-50 border-pink-100 text-slate-900 ml-auto', true);
             
             const currentImg = selectedBase64Image;
             promptInput.value = '';
             removeImage();
 
-            const loadingId = appendMessage('Thinking...', 'bg-white border-slate-200 text-blue-600 animate-pulse');
+            const loadingId = appendMessage('Thinking...', 'bg-white border-pink-100 text-pink-600 animate-pulse');
             const aiResponse = await callGeminiAPI(text || "What is in this image?", currentImg);
             
-            loadingId.className = 'p-4 bg-white border border-slate-200 rounded-2xl shadow-sm text-sm text-slate-800 whitespace-pre-line';
+            loadingId.className = 'p-4 bg-white border border-pink-100 rounded-2xl shadow-sm text-sm text-slate-800 whitespace-pre-line';
             loadingId.innerText = aiResponse;
             chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Speak out response automatically in robotic/Indian tone
+            speakText(aiResponse);
         }
 
         function appendMessage(text, className, isHTML = false) {
             const msgDiv = document.createElement('div');
             msgDiv.className = `p-4 rounded-2xl border shadow-sm text-sm max-w-[85%] ${className}`;
-            if (isHTML) {
-                msgDiv.innerHTML = text;
-            } else {
-                msgDiv.innerText = text;
-            }
+            if (isHTML) msgDiv.innerHTML = text; else msgDiv.innerText = text;
             chatContainer.appendChild(msgDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             return msgDiv;
