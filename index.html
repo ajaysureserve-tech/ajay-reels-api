@@ -3,265 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OmniSpark AI Studio - Gemini Style</title>
-    <script src="https://tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
-        body { background-color: #f8fafc; color: #1e293b; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    </style>
+    <title>OmniSpark AI Studio</title>
+    <link rel="stylesheet" href="Style.css">
 </head>
-<body class="h-screen flex flex-col justify-between overflow-hidden">
-
-    <!-- Top Gemini-style Header -->
-    <header class="h-14 flex items-center justify-between px-4 bg-white border-b border-slate-200 z-30 shrink-0">
-        <div class="flex items-center space-x-3">
-            <button onclick="toggleSidebar()" class="p-2 rounded-lg hover:bg-slate-100 text-slate-600 transition" title="Menu">
-                <i class="fa-solid fa-bars text-base"></i>
-            </button>
-            <div class="flex items-center space-x-2 font-bold text-slate-900 text-base">
-                <i class="fa-solid fa-sparkles text-blue-600"></i>
-                <span>OmniSpark AI</span>
-            </div>
+<body>
+    <div class="chat-container">
+        <div id="chat-box" class="chat-box">
+            <!-- Messages will appear here -->
         </div>
 
-        <div class="flex items-center space-x-2">
-            <button onclick="startNewChat()" class="flex items-center space-x-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-full text-xs font-semibold transition">
-                <i class="fa-solid fa-plus text-[10px]"></i>
-                <span>New Chat</span>
-            </button>
-            <div class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs shadow-sm">
-                AI
-            </div>
-        </div>
-    </header>
-
-    <!-- Sidebar Drawer -->
-    <div id="sidebar" class="absolute inset-y-0 left-0 w-72 bg-white border-r border-slate-200 shadow-xl flex flex-col justify-between transition-transform duration-300 z-40 -translate-x-full">
-        <div>
-            <div class="p-4 flex items-center justify-between border-b border-slate-100">
-                <span class="font-bold text-slate-800 text-xs uppercase tracking-wider">7 AI Skills Modules</span>
-                <button onclick="toggleSidebar()" class="p-1.5 rounded-lg hover:bg-slate-100 text-slate-500">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="p-2 space-y-1 overflow-y-auto">
-                <button onclick="selectModule('chat'); toggleSidebar();" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-blue-50 text-blue-600 text-xs font-semibold">
-                    <i class="fa-solid fa-comments w-4"></i><span>General Assistant</span>
-                </button>
-                <button onclick="selectModule('prompt'); toggleSidebar();" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium">
-                    <i class="fa-solid fa-terminal text-purple-600 w-4"></i><span>1. Prompt Engineering</span>
-                </button>
-                <button onclick="selectModule('content'); toggleSidebar();" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium">
-                    <i class="fa-solid fa-pen-nib text-blue-600 w-4"></i><span>2. AI Content Creation</span>
-                </button>
-                <button onclick="selectModule('video'); toggleSidebar();" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium">
-                    <i class="fa-solid fa-video text-pink-600 w-4"></i><span>3. AI Video Creation</span>
-                </button>
-                <button onclick="selectModule('marketing'); toggleSidebar();" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium">
-                    <i class="fa-solid fa-bullhorn text-amber-600 w-4"></i><span>4. Marketing Automation</span>
-                </button>
-                <button onclick="selectModule('design'); toggleSidebar();" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium">
-                    <i class="fa-solid fa-wand-magic-sparkles text-cyan-600 w-4"></i><span>5. AI Design & Creativity</span>
-                </button>
-                <button onclick="selectModule('data'); toggleSidebar();" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium">
-                    <i class="fa-solid fa-chart-pie text-emerald-600 w-4"></i><span>6. AI Data & Decisions</span>
-                </button>
-                <button onclick="selectModule('branding'); toggleSidebar();" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium">
-                    <i class="fa-solid fa-user-shield text-violet-600 w-4"></i><span>7. Personal Branding</span>
-                </button>
-            </div>
-        </div>
-        <div class="p-3 border-t border-slate-100 text-[10px] text-slate-400 text-center">
-            OmniSpark AI Studio • v4.2
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Ask OmniSpark anything or type a prompt...">
+            <button id="mic-btn" title="Voice Input">🎤</button>
+            <button id="send-btn" title="Send Message">↑</button>
         </div>
     </div>
-    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/20 hidden z-30"></div>
 
-    <!-- Main Workspace -->
-    <main class="flex-1 flex flex-col overflow-y-auto px-4 max-w-3xl mx-auto w-full justify-between py-4">
-        
-        <!-- Welcome or Chat View -->
-        <div id="view-chat" class="flex-1 flex flex-col justify-center items-center text-center space-y-4 my-auto">
-            <div id="welcome-banner" class="space-y-2">
-                <h1 class="text-2xl md:text-4xl font-bold text-slate-800 tracking-tight">
-                    Hello, Creator
-                </h1>
-                <p class="text-slate-500 text-sm md:text-base">How can OmniSpark help you today?</p>
-            </div>
-            
-            <div id="chat-messages" class="w-full space-y-4 text-left overflow-y-auto max-h-[55vh] hidden pr-1">
-                <!-- Chat messages go here -->
-            </div>
-        </div>
-
-        <!-- Module View -->
-        <div id="view-module" class="w-full hidden my-auto py-2">
-            <div id="module-container" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <!-- Module dynamic content -->
-            </div>
-        </div>
-
-        <!-- Gemini-style Bottom Input Bar -->
-        <div class="w-full pt-2 shrink-0">
-            <div class="bg-slate-100 rounded-3xl px-4 py-2 border border-slate-200 shadow-sm flex items-center space-x-2 focus-within:bg-white focus-within:border-blue-500 transition-all">
-                <label class="cursor-pointer text-slate-400 hover:text-slate-600 p-2 transition" title="Add file">
-                    <i class="fa-solid fa-plus text-sm"></i>
-                    <input type="file" class="hidden" onchange="handleFile(event)">
-                </label>
-
-                <input type="text" id="main-input" class="w-full bg-transparent text-slate-800 placeholder-slate-400 focus:outline-none text-sm font-medium py-1.5" placeholder="Enter a prompt here..." onkeydown="if(event.key === 'Enter') sendPrompt()">
-
-                <div class="flex items-center space-x-1">
-                    <button onclick="toggleMic()" id="mic-btn" class="text-slate-400 hover:text-slate-600 p-2 transition rounded-full" title="Voice Input">
-                        <i class="fa-solid fa-microphone text-sm"></i>
-                    </button>
-                    <button onclick="sendPrompt()" class="bg-blue-600 hover:bg-blue-700 text-white w-8 h-8 rounded-full flex items-center justify-center transition shadow-xs" title="Send">
-                        <i class="fa-solid fa-arrow-up text-xs"></i>
-                    </button>
-                </div>
-            </div>
-            <div id="status-toast" class="hidden text-center text-[11px] text-blue-600 mt-1.5 font-medium"></div>
-        </div>
-
-    </main>
-
-    <!-- Script Controller -->
     <script>
-        const p1 = "AQ.Ab8RN6";
-        const p2 = "KYNobNtG0m";
-        const p3 = "HnWmiTwIt";
-        const p4 = "PwHIQF0umi";
-        const p5 = "_K-jld1SV4Ta3Sg";
-        const API_KEY = p1 + p2 + p3 + p4 + p5;
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const micBtn = document.getElementById('mic-btn');
 
-        let currentModule = 'chat';
+        // Apni Gemini API key yahan dalein
+        const API_KEY = "YOUR_GEMINI_API_KEY"; 
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('-translate-x-full');
-            document.getElementById('sidebar-overlay').classList.toggle('hidden');
-        }
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
 
-        function startNewChat() {
-            document.getElementById('welcome-banner').classList.remove('hidden');
-            document.getElementById('chat-messages').classList.add('hidden');
-            document.getElementById('chat-messages').innerHTML = '';
-            document.getElementById('view-chat').classList.remove('hidden');
-            document.getElementById('view-module').classList.add('hidden');
-            currentModule = 'chat';
-        }
+            // User message append karein
+            appendMessage(text, 'user');
+            userInput.value = '';
 
-        function selectModule(mod) {
-            currentModule = mod;
-            document.getElementById('welcome-banner').classList.add('hidden');
-            document.getElementById('chat-messages').classList.add('hidden');
-            document.getElementById('view-chat').classList.add('hidden');
-            document.getElementById('view-module').classList.remove('hidden');
+            const loadingId = appendMessage('Thinking...', 'ai');
 
-            const container = document.getElementById('module-container');
-            const data = {
-                'prompt': { title: '1. Prompt Engineering', desc: 'Craft high-converting prompts for AI models.' },
-                'content': { title: '2. AI Content Creation', desc: 'Generate high-impact articles, social posts & copies.' },
-                'video': { title: '3. AI Video Creation', desc: 'Produce scroll-stopping scripts and viral hooks.' },
-                'marketing': { title: '4. Marketing Automation', desc: 'Build automated email and funnel campaigns.' },
-                'design': { title: '5. AI Design & Creativity', desc: 'Get professional layout and visual aesthetics ideas.' },
-                'data': { title: '6. AI Data & Decisions', desc: 'Analyze strategic business metrics.' },
-                'branding': { title: '7. Personal Branding', desc: 'Establish digital authority and positioning.' }
-            };
-            const info = data[mod] || { title: 'AI Module', desc: 'Execute automated tasks.' };
-
-            container.innerHTML = `
-                <h2 class="font-bold text-slate-800 text-sm mb-1">${info.title}</h2>
-                <p class="text-xs text-slate-500 mb-3">${info.desc}</p>
-                <textarea id="mod-val" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 focus:outline-none focus:border-blue-500 mb-3" placeholder="Enter instructions..."></textarea>
-                <button onclick="runModuleTool('${mod}')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-xs">Generate Output</button>
-                <div id="mod-res" class="hidden mt-3 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 whitespace-pre-line max-h-48 overflow-y-auto"></div>
-            `;
-        }
-
-        function showToast(msg) {
-            const el = document.getElementById('status-toast');
-            el.innerText = msg;
-            el.classList.remove('hidden');
-            setTimeout(() => el.classList.add('hidden'), 3000);
-        }
-
-        // Standard v1 endpoint for Gemini 1.5 Flash (Fixed permanently)
-        async function callGemini(text) {
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: text }] }] })
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: text }] }]
+                    })
                 });
-                const json = await res.json();
-                if(json.candidates && json.candidates[0].content.parts[0].text) {
-                    return json.candidates[0].content.parts[0].text;
-                } else if(json.error) {
-                    return "API Error: " + json.error.message;
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    const aiText = data.candidates[0].content.parts[0].text;
+                    updateMessage(loadingId, aiText);
+                } else {
+                    updateMessage(loadingId, "API Error: Kuch galat ho gaya, dubara try karein.");
                 }
-                return "Response received successfully.";
-            } catch (e) {
-                return "Connection error. Please check network.";
+            } catch (error) {
+                updateMessage(loadingId, "Network Error: API connect nahi ho pa rahi hai.");
             }
         }
 
-        async function sendPrompt() {
-            const input = document.getElementById('main-input');
-            const val = input.value.trim();
-            if(!val) return;
+        function appendMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.innerText = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return messageDiv;
+        }
 
-            if(currentModule === 'chat') {
-                document.getElementById('welcome-banner').classList.add('hidden');
-                const box = document.getElementById('chat-messages');
-                box.classList.remove('hidden');
+        function updateMessage(element, text) {
+            element.innerText = text;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
 
-                box.innerHTML += `
-                    <div class="flex items-start space-x-2.5 text-xs">
-                        <div class="w-6 h-6 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold shrink-0">You</div>
-                        <div class="text-slate-800 mt-1 font-medium bg-slate-100 p-2.5 rounded-2xl">${val}</div>
-                    </div>
-                    <div id="load-box" class="flex items-start space-x-2.5 text-xs">
-                        <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shrink-0"><i class="fa-solid fa-sparkles animate-spin text-[10px]"></i></div>
-                        <div class="text-blue-600 mt-1 font-medium animate-pulse">Thinking...</div>
-                    </div>
-                `;
-                input.value = '';
-                box.scrollTop = box.scrollHeight;
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
 
-                const reply = await callGemini(val);
-                document.getElementById('load-box').remove();
+        // Mic button basic speech recognition support
+        micBtn.addEventListener('click', () => {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'en-US';
+                recognition.start();
 
-                box.innerHTML += `
-                    <div class="flex items-start space-x-2.5 text-xs">
-                        <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shrink-0"><i class="fa-solid fa-sparkles text-[10px]"></i></div>
-                        <div class="text-slate-800 mt-1 whitespace-pre-line leading-relaxed bg-white border border-slate-200 p-3 rounded-2xl shadow-2xs">${reply}</div>
-                    </div>
-                `;
-                box.scrollTop = box.scrollHeight;
+                recognition.onresult = (event) => {
+                    userInput.value = event.results[0][0].transcript;
+                };
+            } else {
+                alert("Speech recognition is not supported in this browser.");
             }
-        }
-
-        async function runModuleTool(mod) {
-            const val = document.getElementById('mod-val').value.trim();
-            if(!val) return;
-            const resDiv = document.getElementById('mod-res');
-            resDiv.classList.remove('hidden');
-            resDiv.innerText = "Generating expert output...";
-            const ans = await callGemini(`Act as an expert in ${mod}. Details: ${val}`);
-            resDiv.innerText = ans;
-        }
-
-        function handleFile(e) {
-            if(e.target.files[0]) showToast(`Attached: ${e.target.files[0].name}`);
-        }
-
-        function toggleMic() {
-            showToast("🎙️ Microphone listening simulation active...");
-        }
+        });
     </script>
 </body>
 </html>
-
