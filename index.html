@@ -17,6 +17,15 @@
             50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); }
         }
         .live-glow { animation: pulse-glow 2s infinite ease-in-out; }
+        
+        /* Perplexity Style Bouncing Dots */
+        @keyframes bounce-dot {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+        .perp-dot-1 { animation: bounce-dot 1.4s infinite ease-in-out both; animation-delay: -0.32s; }
+        .perp-dot-2 { animation: bounce-dot 1.4s infinite ease-in-out both; animation-delay: -0.16s; }
+        .perp-dot-3 { animation: bounce-dot 1.4s infinite ease-in-out both; }
     </style>
 </head>
 <body class="bg-gradient-pink-white text-slate-800 font-sans h-screen flex flex-col justify-between overflow-hidden relative">
@@ -72,9 +81,8 @@
     <!-- Backdrop -->
     <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/20 z-40 hidden backdrop-blur-xs transition-opacity"></div>
 
-    <!-- Gemini Live Voice Mode Overlay (Image 12 Style) -->
+    <!-- Gemini Live Voice Mode Overlay -->
     <div id="live-voice-overlay" class="fixed inset-0 bg-gradient-to-b from-white/95 via-pink-50/90 to-blue-50/95 z-50 hidden flex flex-col justify-between p-6 backdrop-blur-md">
-        <!-- Top Header inside Live Mode -->
         <div class="flex items-center justify-between">
             <button onclick="closeLiveVoice()" class="p-2 rounded-full hover:bg-pink-100/50 text-slate-700 transition">
                 <i class="fa-solid fa-bars text-lg"></i>
@@ -82,7 +90,6 @@
             <div class="flex items-center space-x-2 bg-white/80 border border-pink-200 px-3 py-1.5 rounded-full shadow-xs">
                 <span class="text-xs font-semibold text-slate-700">Voice Tone:</span>
                 <select id="voice-selector" class="text-xs bg-transparent text-pink-600 font-bold focus:outline-none cursor-pointer">
-                    <!-- Populated dynamically via JS -->
                 </select>
             </div>
             <div onclick="openAccountModal()" class="w-9 h-9 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 text-white font-bold flex items-center justify-center text-xs cursor-pointer shadow-sm" id="live-avatar">
@@ -90,15 +97,13 @@
             </div>
         </div>
 
-        <!-- Center Glowing Wave Animation -->
         <div class="flex flex-col items-center justify-center space-y-6 my-auto">
             <div id="live-sphere" class="w-36 h-36 rounded-full bg-gradient-to-tr from-pink-500 via-rose-400 to-blue-400 live-glow shadow-2xl flex items-center justify-center text-white text-3xl">
                 <i class="fa-solid fa-microphone-lines animate-pulse"></i>
             </div>
-            <div id="live-status-text" class="text-sm font-semibold text-slate-600 tracking-wide">Listening to you (Indian Accent)...</div>
+            <div id="live-status-text" class="text-sm font-semibold text-slate-600 tracking-wide">Listening in Indian languages... (Speak now)</div>
         </div>
 
-        <!-- Bottom Controls (Image 12 Exact Layout) -->
         <div class="flex items-center justify-center space-x-4 pb-4">
             <button onclick="alert('Camera / Video mode in Live')" class="w-12 h-12 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-slate-700 hover:bg-pink-50 transition">
                 <i class="fa-solid fa-video text-base"></i>
@@ -114,7 +119,7 @@
                     <span class="w-1 h-3 bg-pink-400 animate-bounce delay-300"></span>
                 </div>
             </div>
-            <button onclick="toggleLiveVoice()" class="w-12 h-12 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-slate-700 hover:bg-pink-50 transition" title="Mute Mic">
+            <button onclick="startLiveSpeechRecognition()" class="w-12 h-12 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-slate-700 hover:bg-pink-50 transition" title="Restart Mic">
                 <i class="fa-solid fa-microphone text-base text-pink-600"></i>
             </button>
             <button onclick="closeLiveVoice()" class="w-12 h-12 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-slate-700 hover:bg-red-50 hover:text-red-600 transition" title="End Live">
@@ -230,6 +235,7 @@
         let selectedBase64Image = null;
         let synth = window.speechSynthesis;
         let voices = [];
+        let recognition = null;
 
         window.onload = function() {
             let savedName = localStorage.getItem('gemini_username');
@@ -239,6 +245,7 @@
             if (synth.onvoiceschanged !== undefined) {
                 synth.onvoiceschanged = loadVoices;
             }
+            initSpeechRecognition();
         };
 
         function loadVoices() {
@@ -246,8 +253,8 @@
             const voiceSelector = document.getElementById('voice-selector');
             voiceSelector.innerHTML = '';
             
-            // Filter Indian or English voices for girl/boy robotic tones
             voices.forEach((voice, index) => {
+                // Prioritize Indian and English voices
                 if (voice.lang.includes('IN') || voice.lang.includes('en') || voice.name.includes('Google') || voice.name.includes('Natural')) {
                     const option = document.createElement('option');
                     option.value = index;
@@ -264,54 +271,78 @@
 
         function speakText(text) {
             if (!synth) return;
-            synth.cancel(); // Stop previous speech
+            synth.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             const voiceSelector = document.getElementById('voice-selector');
             const selectedIdx = voiceSelector.value;
             if (voices[selectedIdx]) {
                 utterance.voice = voices[selectedIdx];
             }
-            utterance.rate = 1.0; // Normal speed
-            utterance.pitch = 1.1; // Slightly robotic / bright tone
+            utterance.rate = 1.0;
+            utterance.pitch = 1.1; // Robotic girl/boy tone
             synth.speak(utterance);
         }
 
-        function openLiveVoice() {
-            liveVoiceOverlay.classList.remove('hidden');
-            startLiveSpeechRecognition();
-        }
-
-        function closeLiveVoice() {
-            liveVoiceOverlay.classList.add('hidden');
-            if (synth) synth.cancel();
-        }
-
-        function startLiveSpeechRecognition() {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                alert("Speech recognition not supported in this browser.");
-                return;
-            }
+        function initSpeechRecognition() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'hi-IN'; // Indian Language / Accent support
+            if (!SpeechRecognition) return;
             
-            document.getElementById('live-status-text').innerText = "Listening in Indian language/accent...";
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'hi-IN'; // Default multi-lingual Indian support (Hindi/English mix)
 
             recognition.onresult = async function(event) {
                 const spokenText = event.results[0][0].transcript;
                 document.getElementById('live-status-text').innerText = `You said: "${spokenText}"`;
                 
-                // Call API and Speak out response in robotic tone
+                // Process prompt via API
                 const aiResponse = await callGeminiAPI(spokenText);
-                document.getElementById('live-status-text').innerText = aiResponse.substring(0, 80) + "...";
+                document.getElementById('live-status-text').innerText = aiResponse.substring(0, 70) + "...";
                 speakText(aiResponse);
             };
 
-            recognition.onerror = function() {
-                document.getElementById('live-status-text').innerText = "Listening error. Tap mic to retry.";
+            recognition.onerror = function(event) {
+                document.getElementById('live-status-text').innerText = "Didn't catch that. Tap mic to speak again.";
             };
 
-            recognition.start();
+            recognition.onend = function() {
+                // Auto restart or keep status
+            };
+        }
+
+        function openLiveVoice() {
+            liveVoiceOverlay.classList.remove('hidden');
+            if (recognition) {
+                try {
+                    document.getElementById('live-status-text').innerText = "Listening in Indian languages (Hindi, English)...";
+                    recognition.start();
+                } catch(e) {
+                    // already started
+                }
+            } else {
+                alert("Speech recognition not supported in this browser/device.");
+            }
+        }
+
+        function startLiveSpeechRecognition() {
+            if (recognition) {
+                try {
+                    document.getElementById('live-status-text').innerText = "Listening again...";
+                    recognition.start();
+                } catch(e) {
+                    recognition.stop();
+                    setTimeout(() => recognition.start(), 200);
+                }
+            }
+        }
+
+        function closeLiveVoice() {
+            liveVoiceOverlay.classList.add('hidden');
+            if (synth) synth.cancel();
+            if (recognition) {
+                try { recognition.stop(); } catch(e) {}
+            }
         }
 
         function updateUIProfile(name) {
@@ -443,14 +474,22 @@
             promptInput.value = '';
             removeImage();
 
-            const loadingId = appendMessage('Thinking...', 'bg-white border-pink-100 text-pink-600 animate-pulse');
+            // Perplexity Style Bouncing Dots Loading Animation
+            const loadingHtml = `
+                <div class="flex items-center space-x-1.5 py-1 px-2">
+                    <span class="w-2 h-2 bg-pink-500 rounded-full perp-dot-1"></span>
+                    <span class="w-2 h-2 bg-pink-500 rounded-full perp-dot-2"></span>
+                    <span class="w-2 h-2 bg-pink-500 rounded-full perp-dot-3"></span>
+                </div>
+            `;
+            const loadingId = appendMessage(loadingHtml, 'bg-white border-pink-100 inline-block', true);
+
             const aiResponse = await callGeminiAPI(text || "What is in this image?", currentImg);
             
             loadingId.className = 'p-4 bg-white border border-pink-100 rounded-2xl shadow-sm text-sm text-slate-800 whitespace-pre-line';
             loadingId.innerText = aiResponse;
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
-            // Speak out response automatically in robotic/Indian tone
             speakText(aiResponse);
         }
 
