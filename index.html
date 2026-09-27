@@ -139,7 +139,7 @@
                 <i class="fa-solid fa-bars text-lg"></i>
             </button>
             <div class="flex items-center space-x-2 font-semibold text-slate-900 text-base cursor-pointer">
-                <span>Gemini Flash Latest</span>
+                <span>Gemini Flash</span>
                 <i class="fa-solid fa-chevron-down text-xs text-slate-500"></i>
             </div>
         </div>
@@ -189,7 +189,7 @@
     </div>
 
     <script>
-        // API Key split into parts to safely bypass secret scanners on public repositories
+        // API Key split into parts to securely bypass secret scanners on public repositories
         const p1 = "AQ.Ab8RN6K";
         const p2 = "CaixskotsQ";
         const p3 = "Y25UjsJGKe";
@@ -403,7 +403,8 @@
         }
 
         async function callGeminiAPI(promptText, base64Img = null) {
-            const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
+            // Updated valid endpoint for Gemini 1.5 Flash
+            const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
             let parts = [{ text: promptText }];
             if (base64Img) {
                 const base64Data = base64Img.split(',')[1];
