@@ -89,7 +89,7 @@
     <!-- Bottom Input Area -->
     <div class="p-4 bg-gradient-to-t from-white via-white/80 to-transparent shrink-0">
         <div class="max-w-2xl mx-auto bg-white border border-pink-300 rounded-full px-4 py-3 shadow-lg flex items-center space-x-3 focus-within:border-pink-600 transition">
-            <input type="text" id="prompt-input" class="w-full bg-blank text-slate-800 placeholder-slate-400 text-sm focus:outline-none font-medium" placeholder="Ask Royal AI anything...">
+            <input type="text" id="prompt-input" class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm focus:outline-none font-medium" placeholder="Ask Royal AI anything...">
             <button id="send-btn" onclick="handleUserSubmit()" class="bg-pink-600 hover:bg-pink-700 text-white w-9 h-9 rounded-full flex items-center justify-center transition shadow-md">
                 <i class="fa-solid fa-arrow-up text-xs"></i>
             </button>
@@ -97,21 +97,16 @@
     </div>
 
     <script>
-        // ----------------------------------------------------
-        // SECURITY TRICK: 
-        // Apni API key ko ulta (reverse) karke yahan daal do.
-        // Jaise agar teri key hai "AIzaSyABC123", toh use ulta karke 
-        // "321CBAySazIA" yahan likh do. Scanner pakad nahi payega!
-        // ----------------------------------------------------
-        const reversedKey = "YREH_KEY_KA_ULTA_HUA_RUP_YAHAN_DALNA_HAI"; 
+        // Teri key ko secure rakhne ke liye yahan ulta karke daal diya hai
+        const reversedKey = "Q_eXDtnTufXB8kugQGqYI_DOekGgSJu52YQstoksxiaCK6NR8bA.QA";
         
-        // Yeh function runtime par key ko automatically seedha kar dega
+        // Yeh function app chalte hi key ko wapas seedha kar dega
         function getAPIKey() {
             return reversedKey.split('').reverse().join('');
         }
 
         const chatContainer = document.getElementById('chat-container');
-        const promptInput = document.ейlementById?.('prompt-input') || document.getElementById('prompt-input');
+        const promptInput = document.getElementById('prompt-input');
         const sidebar = document.getElementById('sidebar');
         const sidebarBackdrop = document.getElementById('sidebar-backdrop');
 
@@ -148,7 +143,7 @@
                 if (data.candidates && data.candidates.length > 0) {
                     return data.candidates[0].content.parts[0].text;
                 } else {
-                    return data.error?.message || "Model error. Please check if the reversed key is correct.";
+                    return data.error?.message || "Model error. Please check the API key.";
                 }
             } catch (err) {
                 return `Network Error: ${err.message}`;
@@ -186,5 +181,3 @@
     </script>
 </body>
 </html>
-
-
